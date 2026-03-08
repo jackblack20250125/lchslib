@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高雄市立路竹高中圖書館 LCHS Library</title>
+    <meta name="description" content="高雄市立路竹高級中學圖書館官方網站，提供最新消息、館藏查詢、網路資源與下載。">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0ea5e9', /* Sky Blue 500 */
+                        primaryDark: '#0284c7', /* Sky Blue 600 */
+                        accent: '#f97316', /* Orange 500 */
+                        accentLight: '#fdba74', /* Orange 300 */
+                        bgLight: '#f8fafc',
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                        en: ['"Poppins"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-bgLight text-gray-800 font-sans antialiased overflow-x-hidden">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 transition-all duration-300 backdrop-blur-md bg-white/80 shadow-sm border-b border-gray-100" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="w-10 h-10 bg-primary text-white rounded-xl flex items-center justify-center text-xl font-bold shadow-lg shadow-primary/30">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900 leading-tight">路竹高中圖書館</h1>
+                        <p class="text-[10px] font-en text-primaryDark tracking-widest uppercase">LCHS Library</p>
+                    </div>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#news" class="nav-link">最新消息</a>
+                    <a href="#about" class="nav-link">本館簡介</a>
+                    <a href="#downloads" class="nav-link">資源下載</a>
+                    <a href="#gallery" class="nav-link">活動花絮</a>
+                    <a href="http://192.168.11.242/webopac" target="_blank" class="px-5 py-2.5 bg-accent text-white rounded-full font-medium hover:bg-orange-600 transition-colors shadow-lg shadow-orange-500/30 flex flex-col items-center leading-none" title="另開新視窗">
+                        <span><i class="fa-solid fa-magnifying-glass mr-1"></i>館藏查詢</span>
+                        <span class="text-[9px] mt-1 opacity-80">(僅限校內使用)</span>
+                    </a>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-primary focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-xl absolute w-full">
+            <div class="px-4 pt-2 pb-6 space-y-1">
+                <a href="#news" class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-sky-50">最新消息</a>
+                <a href="#about" class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-sky-50">本館簡介</a>
+                <a href="#downloads" class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-sky-50">資源下載</a>
+                <a href="#gallery" class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-sky-50">活動花絮</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <!-- Background decorative elements -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 bg-gradient-to-br from-sky-50 via-white to-orange-50">
+            <div class="absolute -top-24 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+            <div class="absolute top-1/2 -left-24 w-72 h-72 bg-accent/10 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center max-w-3xl mx-auto">
+                <div class="inline-block mb-4 px-4 py-1.5 rounded-full bg-orange-100 text-orange-600 font-medium text-sm border border-orange-200 shadow-sm animate-fade-in-up">
+                    <i class="fa-solid fa-sparkles mr-1"></i> 歡迎來到知識的殿堂
+                </div>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-6 tracking-tight animate-fade-in-up" style="animation-delay: 0.1s;">
+                    探索知識的海洋<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">路竹高中圖書館</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-600 mb-10 animate-fade-in-up" style="animation-delay: 0.2s;">
+                    豐富館藏、舒適空間、數位學習資源，伴你度過充實的高中生涯。
+                </p>
+                
+                <!-- Search Box -->
+                <div class="relative max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.3s;">
+                    <form action="http://192.168.11.242/webopac" target="_blank" class="flex items-center bg-white rounded-full p-2 shadow-xl shadow-gray-200/50 border border-gray-100 focus-within:ring-4 focus-within:ring-primary/20 transition-all">
+                        <div class="pl-6 pr-4 text-gray-400">
+                            <i class="fa-solid fa-book"></i>
+                        </div>
+                        <input type="text" placeholder="尋找您感興趣的書籍..." class="w-full py-3 bg-transparent outline-none text-gray-700 placeholder-gray-400" disabled>
+                        <button type="submit" class="bg-primary hover:bg-primaryDark text-white px-8 py-3 rounded-full font-medium transition-colors ml-2 flex-shrink-0 flex flex-col items-center">
+                            <span>快速查詢</span>
+                            <span class="text-[10px] opacity-80 font-normal">僅限校內</span>
+                        </button>
+                    </form>
+                    <p class="text-xs text-gray-500 mt-4"><i class="fa-solid fa-circle-info mr-1"></i>點擊查詢將另開新視窗導向圖書查詢系統 (僅限校內網路連線使用)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section id="news" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12 text-center">
+                <h2 class="section-title">最新消息 <span class="section-subtitle">Hot News</span></h2>
+                <div class="h-1 w-20 bg-primary mx-auto rounded-full mt-4"></div>
+            </div>
+            
+            <!-- Loading State -->
+            <div id="news-loading" class="flex justify-center py-12 text-primary">
+                <i class="fa-solid fa-circle-notch fa-spin text-4xl"></i>
+            </div>
+            
+            <!-- News Grid -->
+            <div id="news-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 hidden">
+                <!-- Cards injected by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-16 text-center">
+                <h2 class="section-title">本館簡介 <span class="section-subtitle">About Us</span></h2>
+                <div class="h-1 w-20 bg-accent mx-auto rounded-full mt-4"></div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-16 items-start">
+                <!-- History & Goals -->
+                <div class="space-y-12">
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 custom-card">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-12 h-12 bg-sky-100 text-primary rounded-2xl flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-clock-rotate-left"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-800">歷史沿革</h3>
+                        </div>
+                        <div class="text-gray-600 leading-relaxed space-y-4 text-justify">
+                            <p>本校創於民國四十三年，為省立岡山中學路竹分部，初期僅有圖書室且隸屬於教務處，經過歷任校長和先進同仁奮鬥努力，使得原本規模頗小的圖書室蛻變為e時代的新面貌。</p>
+                            <p>本校於八十八年改制為完全中學，九十年改名為『路竹高中』。獲教育部專款補助完成自動化流通管理與網路查詢系統，增設參考閱覽區、多媒體區等，成為校內『教育資源中心』。</p>
+                            <p>九十四年正式成立『圖書館』編制。於九十五年初將舊行政大樓改建，六月十三日正式啟用，命名為『圖書資訊館』。</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 custom-card relative overflow-hidden">
+                        <div class="absolute -right-6 -bottom-6 text-orange-50 opacity-50 text-9xl pointer-events-none">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <div class="flex items-center gap-4 mb-6 relative">
+                            <div class="w-12 h-12 bg-orange-100 text-accent rounded-2xl flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-flag"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-800">工作目標</h3>
+                        </div>
+                        <ul class="space-y-4 relative">
+                            <li class="flex gap-4 items-start">
+                                <i class="fa-solid fa-check text-accent mt-1"></i>
+                                <span class="text-gray-600">提供教學及個人閱讀、研究所需的圖書資料。</span>
+                            </li>
+                            <li class="flex gap-4 items-start">
+                                <i class="fa-solid fa-check text-accent mt-1"></i>
+                                <span class="text-gray-600">協助學生根據個人興趣和課程上的需要選擇圖書資料。</span>
+                            </li>
+                            <li class="flex gap-4 items-start">
+                                <i class="fa-solid fa-check text-accent mt-1"></i>
+                                <span class="text-gray-600">指導讀者應用與檢索資訊的要領，培養終身學習的能力。</span>
+                            </li>
+                            <li class="flex gap-4 items-start">
+                                <i class="fa-solid fa-check text-accent mt-1"></i>
+                                <span class="text-gray-600">積極推動圖書館利用教育，培養學生自學能力。</span>
+                            </li>
+                            <li class="flex gap-4 items-start">
+                                <i class="fa-solid fa-check text-accent mt-1"></i>
+                                <span class="text-gray-600">建立以讀者需求為導向的服務態度，提升服務品質。</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Organization -->
+                <div>
+                    <div class="flex items-center justify-between mb-8 px-2">
+                        <h3 class="text-2xl font-bold text-gray-800">組織分工 <span class="text-sm font-en text-gray-400 uppercase tracking-widest ml-2">Organization</span></h3>
+                    </div>
+                    <div class="bg-primary text-white rounded-3xl p-8 shadow-xl shadow-primary/20 relative overflow-hidden">
+                        <div class="absolute right-0 top-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-20 -mt-20"></div>
+                        <p class="mb-8 text-sky-100 leading-relaxed text-justify">本館設教師兼主任一人，承校長之命綜理館務，另設置組長一人，協辦行政二人，助理一人，並成立圖書館委員會，以協助館務之興革與發展。</p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between bg-white/10 p-4 rounded-2xl backdrop-blur-sm border border-white/10 hover:bg-white/20 transition-colors">
+                                <div class="flex flex-col">
+                                    <span class="text-sky-200 text-xs font-bold mb-1"><i class="fa-solid fa-user-tie mr-1"></i>圖書館主任</span>
+                                    <span class="font-medium text-lg">師秀玲 主任</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between bg-white/10 p-4 rounded-2xl backdrop-blur-sm border border-white/10 hover:bg-white/20 transition-colors">
+                                <div class="flex flex-col">
+                                    <span class="text-sky-200 text-xs font-bold mb-1"><i class="fa-solid fa-book-reader mr-1"></i>讀者服務組</span>
+                                    <span class="font-medium text-lg">廖珮君 組長 / 陳信凱 副組長</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between bg-white/10 p-4 rounded-2xl backdrop-blur-sm border border-white/10 hover:bg-white/20 transition-colors">
+                                <div class="flex flex-col">
+                                    <span class="text-sky-200 text-xs font-bold mb-1"><i class="fa-solid fa-network-wired mr-1"></i>資訊組</span>
+                                    <span class="font-medium text-lg">許鐵鐘 組長</span>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
+                                    <span class="text-sky-200 text-xs block mb-1">網管人員</span>
+                                    <span class="font-medium text-sm">蕭淑惠 老師</span>
+                                </div>
+                                <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
+                                    <span class="text-sky-200 text-xs block mb-1">業務助理</span>
+                                    <span class="font-medium text-sm">黃宴華 小姐</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Downloads & Links Section -->
+    <section id="downloads" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16">
+                
+                <!-- Downloads -->
+                <div>
+                    <div class="mb-10">
+                        <h2 class="section-title">檔案下載 <span class="section-subtitle">Downloads</span></h2>
+                        <div class="h-1 w-16 bg-primary rounded-full mt-4"></div>
+                    </div>
+                    
+                    <div id="downloads-loading" class="flex justify-center py-8 text-primary">
+                        <i class="fa-solid fa-circle-notch fa-spin text-2xl"></i>
+                    </div>
+                    
+                    <div id="downloads-container" class="space-y-4 hidden">
+                        <!-- Injected by JS -->
+                    </div>
+                </div>
+
+                <!-- Links -->
+                <div>
+                    <div class="mb-10">
+                        <h2 class="section-title">相關連結 <span class="section-subtitle">Links</span></h2>
+                        <div class="h-1 w-16 bg-accent rounded-full mt-4"></div>
+                    </div>
+                    
+                    <div id="links-loading" class="flex justify-center py-8 text-accent">
+                        <i class="fa-solid fa-circle-notch fa-spin text-2xl"></i>
+                    </div>
+                    
+                    <div id="links-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4 hidden">
+                        <!-- Injected by JS -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 bg-gray-900 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12 text-center">
+                <h2 class="section-title text-white">活動花絮 <span class="section-subtitle text-gray-500">Gallery</span></h2>
+                <div class="h-1 w-20 bg-white mx-auto rounded-full mt-4"></div>
+                <p class="text-gray-400 mt-6 max-w-2xl mx-auto">圖書館環境與歷年精彩活動照片集錦。</p>
+            </div>
+            
+            <div id="gallery-loading" class="flex justify-center py-12 text-white">
+                <i class="fa-solid fa-circle-notch fa-spin text-4xl"></i>
+            </div>
+            
+            <!-- CSS Column layout for masonry -->
+            <div id="gallery-container" class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 hidden">
+                <!-- Injected by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 pt-16 pb-8 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-8 border-b border-gray-300 pb-12 mb-8">
+                <!-- Logo & Address -->
+                <div class="flex-1 text-center md:text-left">
+                    <div class="flex items-center justify-center md:justify-start gap-3 mb-6">
+                        <div class="w-10 h-10 bg-gray-800 text-white rounded-xl flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-book-open"></i>
+                        </div>
+                        <h2 class="text-xl font-bold text-gray-900">路竹高中圖書館</h2>
+                    </div>
+                    <ul class="text-gray-600 space-y-2 text-sm">
+                        <li><i class="fa-solid fa-location-dot w-5 text-gray-400"></i> (82150) 高雄市路竹區中華路292號</li>
+                        <li><i class="fa-solid fa-phone w-5 text-gray-400"></i> 總機：(07) 696-3008</li>
+                        <li><i class="fa-solid fa-fax w-5 text-gray-400"></i> 傳真：(07) 697-0714</li>
+                        <li><i class="fa-solid fa-envelope w-5 text-gray-400"></i> <a href="mailto:ling026@yahoo.com.tw" class="hover:text-primary transition-colors">ling026@yahoo.com.tw</a> (主任信箱)</li>
+                    </ul>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="text-center md:text-right">
+                    <h3 class="font-bold text-gray-900 mb-4 tracking-wider">快速導覽快速導覽 Quick Links</h3>
+                    <div class="flex flex-col space-y-2 text-sm">
+                        <a href="#news" class="text-gray-600 hover:text-primary transition-colors">最新消息</a>
+                        <a href="#about" class="text-gray-600 hover:text-primary transition-colors">本館簡介</a>
+                        <a href="#downloads" class="text-gray-600 hover:text-primary transition-colors">資源下載</a>
+                        <a href="#gallery" class="text-gray-600 hover:text-primary transition-colors">活動花絮</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center text-gray-500 text-xs">
+                <p>版權所有 &copy; 2011 高雄市立路竹高級中學 Lu Chu Senior High School All Rights Reserved.</p>
+                <p class="mt-2 text-gray-400">Developed with ❤️ for Modern Web</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
