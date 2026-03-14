@@ -29,6 +29,81 @@ async function fetchSheetData(sheetName) {
     }
 }
 
+// 全域變數儲存新聞資料，以供 Modal 使用
+let newsData = [];
+let newsVisibleCount = 3; // 預設顯示3筆
+const NEWS_MAX_ITEMS = 30; // 點擊更多後最多顯示30筆
+
+// 渲染單筆新聞的 HTML (變成橫條列狀)
+function renderNewsItemHtml(item) {
+    let tagColor = 'bg-sky-100 text-primary';
+    if(item.tag.includes('活動')) tagColor = 'bg-orange-100 text-accent';
+    if(item.tag.includes('競賽') || item.tag.includes('榮譽') || item.tag.includes('得獎')) tagColor = 'bg-purple-100 text-purple-600';
+
+    const isSchoolLink = item.isSchoolLink && item.schoolLink !== '#' && item.schoolLink !== '';
+    const clickAttr = isSchoolLink ? `href="${item.schoolLink}" target="_blank"` : `href="javascript:void(0)" onclick="openNewsModal(${item.id})"`;
+    const actionText = isSchoolLink ? '前往校網' : '閱讀詳情';
+    const WrapperTag = isSchoolLink ? 'a' : 'div';
+
+    return `
+    <${WrapperTag} ${isSchoolLink ? clickAttr : `onclick="openNewsModal(${item.id})"`} class="group bg-white rounded-2xl p-5 md:p-6 border border-gray-100 hover:border-primary/30 shadow-sm hover:shadow-md transition-all flex flex-col md:flex-row md:items-center gap-4 cursor-pointer relative overflow-hidden">
+        <!-- Hover Gradient -->
+        <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-sky-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+        
+        <!-- Date & Tag (Left/Top) -->
+        <div class="flex items-center md:flex-col md:items-start md:w-32 flex-shrink-0 gap-3 md:gap-2">
+            <span class="px-3 py-1 rounded-full text-xs font-bold ${tagColor}">${item.tag}</span>
+            <span class="text-sm text-gray-500 font-en font-medium"><i class="fa-regular fa-calendar md:hidden mr-1"></i>${item.date}</span>
+        </div>
+        
+        <!-- Title & Excerpt (Middle) -->
+        <div class="flex-1 min-w-0">
+            <h3 class="text-lg md:text-xl font-bold text-gray-900 group-hover:text-primary transition-colors mb-2 truncate">${item.title}</h3>
+            <p class="text-gray-500 text-sm line-clamp-1 group-hover:text-gray-600">${item.excerpt}</p>
+        </div>
+        
+        <!-- Action Button (Right/Bottom) -->
+        <div class="mt-2 md:mt-0 flex-shrink-0 text-right">
+            <span class="inline-flex items-center text-sm font-bold text-primary opacity-0 group-hover:opacity-100 transform translate-x-4 group-hover:translate-x-0 transition-all">
+                ${actionText} <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+            </span>
+            <div class="md:hidden inline-flex items-center text-sm font-bold text-primary group-hover:hidden">
+                ${actionText} <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+            </div>
+        </div>
+    </${WrapperTag}>`;
+}
+
+// 根據最新筆數重新繪製最新消息區塊
+function updateNewsDisplay() {
+    const container = document.getElementById('news-container');
+    const loadMoreContainer = document.getElementById('news-load-more-container');
+    
+    // 限制首頁顯示筆數，最大不超過資料總數或 30 筆
+    const displayCount = Math.min(newsVisibleCount, newsData.length, NEWS_MAX_ITEMS);
+    const visibleCards = newsData.slice(0, displayCount);
+    
+    let html = '';
+    visibleCards.forEach(item => {
+        html += renderNewsItemHtml(item);
+    });
+    
+    container.innerHTML = html;
+
+    // 控制「載入更多」按鈕顯示與隱藏
+    if (newsVisibleCount < newsData.length && newsVisibleCount < NEWS_MAX_ITEMS) {
+        loadMoreContainer.classList.remove('hidden');
+    } else {
+        loadMoreContainer.classList.add('hidden');
+    }
+}
+
+// 點擊「載入更多」按鈕
+function loadMoreNews() {
+    newsVisibleCount = NEWS_MAX_ITEMS;
+    updateNewsDisplay();
+}
+
 // 渲染: 最新消息
 async function renderNews() {
     const container = document.getElementById('news-container');
@@ -43,44 +118,232 @@ async function renderNews() {
         return;
     }
 
-    let html = '';
-    // Reverse array to show newest first, assuming user adds to the bottom. Slice to max 6 items.
-    const displayRows = rows.slice().reverse().slice(0, 6);
+    // Reverse array to show newest first
+    const displayRows = rows.slice().reverse();
+    
+    newsData = [];
+    newsVisibleCount = 3; // 重置為 3 筆
+    
+    // Helper function to find cell value safely based on possible column keywords
+    const getVal = (row, keywords, fallbackColIndex) => {
+        for (const key in row) {
+            if (keywords.some(kw => key.includes(kw))) {
+                return row[key] || '';
+            }
+        }
+        return row[`Column${fallbackColIndex}`] || '';
+    };
 
     displayRows.forEach(row => {
-        // Fallback column names in case user didn't name them exactly as suggested
-        const date = row['日期'] || row['Column0'] || '';
-        const tag = row['分類'] || row['Column1'] || '公告';
-        const title = row['標題'] || row['Column2'] || '未命名公告';
-        const excerpt = row['內容摘要'] || row['Column3'] || '';
-        const link = row['詳細連結'] || row['Column4'] || '#';
+        const isShowRaw = getVal(row, ['是否顯示'], 9);
+        const isShow = isShowRaw.toString().toUpperCase() !== 'FALSE';
+        if (!isShow) return;
+
+        const date = getVal(row, ['公告日期', '日期'], 1);
+        const tag = getVal(row, ['分類'], 2) || '公告';
+        const title = getVal(row, ['標題'], 3) || '未命名公告';
+        const content = getVal(row, ['詳細內容'], 4) || '';
+        const media = getVal(row, ['照片', '檔案'], 5) || '';
+        const useSchoolLinkRaw = getVal(row, ['使用校網'], 6);
+        const isSchoolLink = useSchoolLinkRaw.toString().includes('是') || useSchoolLinkRaw.toString().toUpperCase() === 'TRUE';
+        const schoolLink = getVal(row, ['校網連結'], 7) || '#';
+        const optionalLink = getVal(row, ['連結(非必須)', '其他連結'], 8) || '';
         
-        const isHidden = (row['是否顯示'] || '').toString().toLowerCase() === 'false';
-        if(isHidden) return;
+        // 產生摘要
+        let excerpt = content.replace(/(<([^>]+)>)/gi, "").substring(0, 80);
+        if (content.length > 80) excerpt += '...';
+        
+        if (isSchoolLink && !excerpt) {
+            excerpt = '本公告為校網發佈內容，請點擊閱讀詳情前往學校官方網站查看完整公告...';
+        }
 
-        // Determine tag color
-        let tagColor = 'bg-sky-100 text-primary';
-        if(tag.includes('活動')) tagColor = 'bg-orange-100 text-accent';
-        if(tag.includes('競賽')) tagColor = 'bg-purple-100 text-purple-600';
-
-        html += `
-        <article class="bg-white rounded-3xl overflow-hidden border border-gray-100 news-card flex flex-col h-full shadow-sm">
-            <div class="p-8 flex-1 flex flex-col">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="px-3 py-1 rounded-full text-xs font-bold ${tagColor}">${tag}</span>
-                    <span class="text-sm text-gray-400 font-en"><i class="fa-regular fa-calendar mr-1"></i>${date}</span>
-                </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-3 leading-snug line-clamp-2">${title}</h3>
-                <p class="text-gray-600 mb-6 flex-1 text-sm leading-relaxed line-clamp-3">${excerpt}</p>
-                <a href="${link}" target="${link !== '#' ? '_blank' : '_self'}" class="inline-flex items-center font-bold text-primary hover:text-primaryDark transition-colors mt-auto group">
-                    閱讀詳情 
-                    <i class="fa-solid fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
-                </a>
-            </div>
-        </article>`;
+        const newsItem = {
+            id: newsData.length, // Temporary ID, will be updated after sorting
+            date,
+            tag,
+            title,
+            content,
+            media,
+            isSchoolLink,
+            schoolLink,
+            optionalLink,
+            excerpt
+        };
+        
+        newsData.push(newsItem);
     });
 
-    container.innerHTML = html;
+    // 依據日期由新到舊排序
+    newsData.sort((a, b) => {
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+        
+        // Handle invalid dates by pushing them to the bottom or keeping original order
+        if (isNaN(dateA.getTime()) && isNaN(dateB.getTime())) return 0;
+        if (isNaN(dateA.getTime())) return 1;
+        if (isNaN(dateB.getTime())) return -1;
+        
+        return dateB - dateA;
+    });
+    
+    // 重新排序後更新 ID 以確保 Modal 對應正確
+    newsData.forEach((item, index) => {
+        item.id = index;
+    });
+
+    updateNewsDisplay();
+    
+    // 綁定載入更多按鈕
+    const loadMoreBtn = document.getElementById('news-load-more-btn');
+    if (loadMoreBtn) {
+        // 確保不會重複綁定
+        loadMoreBtn.onclick = loadMoreNews;
+    }
+}
+
+// 開啟新聞 Modal
+window.openNewsModal = function(id) {
+    const item = newsData[id];
+    if (!item) return;
+
+    const modal = document.getElementById('news-modal');
+    const backdrop = document.getElementById('news-modal-backdrop');
+    const content = document.getElementById('news-modal-content');
+
+    // 填充資料
+    document.getElementById('modal-tag').textContent = item.tag;
+    document.getElementById('modal-date').innerHTML = `<i class="fa-regular fa-calendar mr-1"></i>${item.date}`;
+    document.getElementById('modal-title').textContent = item.title;
+    
+    // 處理詳細內容 (保留換行)
+    let bodyHtml = item.content.replace(/\n/g, '<br>');
+    document.getElementById('modal-body').innerHTML = bodyHtml;
+
+    // 處理附件與連結
+    const attachmentsContainer = document.getElementById('modal-attachments');
+    const attachmentsList = document.getElementById('modal-attachments-list');
+    
+    let hasAttachments = false;
+    let attachmentsHtml = '';
+
+    // 照片或檔案
+    if (item.media) {
+        hasAttachments = true;
+        const mediaUrls = item.media.split(/[,\s]+/).filter(u => u.startsWith('http'));
+        
+        if (mediaUrls.length > 0) {
+            mediaUrls.forEach((url, index) => {
+                let displayUrl = url;
+                let isImage = false;
+                
+                if (url.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
+                    isImage = true;
+                }
+                
+                // Google Drive 連結轉換
+                if (url.includes('drive.google.com/file/d/')) {
+                    const idMatch = url.match(/file\/d\/([a-zA-Z0-9_-]+)/);
+                    if (idMatch && idMatch[1]) {
+                        displayUrl = `https://drive.google.com/uc?export=view&id=${idMatch[1]}`;
+                    }
+                }
+                
+                // 如果來源暗示為照片
+                if (isImage || (url.includes('drive.google.com') && item.media.includes('照片'))) {
+                    attachmentsHtml += `
+                    <div class="mt-4 rounded-xl overflow-hidden border border-gray-200">
+                        <img src="${displayUrl}" alt="活動照片" class="w-full h-auto max-h-[400px] object-contain bg-gray-50" onerror="this.outerHTML='<a href=\\'${url}\\' target=\\'_blank\\' class=\\'flex items-center justify-between p-4 bg-gray-50 hover:bg-sky-50 rounded-xl border border-gray-100 transition-colors group\\'><div class=\\'flex items-center gap-3\\'><div class=\\'w-10 h-10 bg-white rounded-lg shadow-sm flex items-center justify-center text-primary\\'><i class=\\'fa-solid fa-file-arrow-down\\'></i></div><span class=\\'font-bold text-gray-700 group-hover:text-primary\\'>照片無法預覽，點此開啟或下載</span></div><i class=\\'fa-solid fa-arrow-up-right-from-square text-gray-400 group-hover:text-primary\\'></i></a>'">
+                        <div class="bg-gray-50 p-3 border-t border-gray-200 flex justify-between items-center px-4">
+                            <span class="text-sm text-gray-500 font-medium">照片/圖片 ${index + 1}</span>
+                            <a href="${url}" target="_blank" class="text-primary hover:text-primaryDark font-bold text-sm bg-sky-100 px-3 py-1.5 rounded-lg transition-colors"><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> 原始連結</a>
+                        </div>
+                    </div>`;
+                } else {
+                    attachmentsHtml += `
+                    <a href="${url}" target="_blank" class="flex items-center justify-between p-4 bg-gray-50 hover:bg-sky-50 rounded-xl border border-gray-100 transition-colors group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-white rounded-lg shadow-sm flex items-center justify-center text-primary">
+                                <i class="fa-solid fa-file-arrow-down"></i>
+                            </div>
+                            <span class="font-bold text-gray-700 group-hover:text-primary">附件檔案 ${index + 1}</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-gray-400 group-hover:text-primary"></i>
+                    </a>`;
+                }
+            });
+        }
+    }
+
+    // 額外連結
+    if (item.optionalLink && item.optionalLink.startsWith('http')) {
+        hasAttachments = true;
+        attachmentsHtml += `
+        <a href="${item.optionalLink}" target="_blank" class="flex items-center justify-between p-4 bg-orange-50 hover:bg-orange-100 rounded-xl border border-orange-100 transition-colors group mt-2">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-white rounded-lg shadow-sm flex items-center justify-center text-accent">
+                    <i class="fa-solid fa-link"></i>
+                </div>
+                <span class="font-bold text-gray-700 group-hover:text-accent">相關連結</span>
+            </div>
+            <i class="fa-solid fa-arrow-up-right-from-square text-orange-300 group-hover:text-accent"></i>
+        </a>`;
+    }
+
+    if (hasAttachments) {
+        attachmentsList.innerHTML = attachmentsHtml;
+        attachmentsContainer.classList.remove('hidden');
+    } else {
+        attachmentsContainer.classList.add('hidden');
+    }
+
+    // 顯示 Modal
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    
+    // 強制重繪
+    void modal.offsetWidth;
+    
+    backdrop.classList.remove('opacity-0');
+    backdrop.classList.add('opacity-100');
+    
+    content.classList.remove('opacity-0', 'scale-95');
+    content.classList.add('opacity-100', 'scale-100');
+    
+    // 鎖定背景滾動
+    document.body.style.overflow = 'hidden';
+}
+
+function closeNewsModal() {
+    const modal = document.getElementById('news-modal');
+    const backdrop = document.getElementById('news-modal-backdrop');
+    const content = document.getElementById('news-modal-content');
+    
+    backdrop.classList.remove('opacity-100');
+    backdrop.classList.add('opacity-0');
+    
+    content.classList.remove('opacity-100', 'scale-100');
+    content.classList.add('opacity-0', 'scale-95');
+    
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.style.overflow = '';
+    }, 300);
+}
+
+function initModal() {
+    const closeBtn = document.getElementById('close-modal-btn');
+    const backdrop = document.getElementById('news-modal-backdrop');
+    
+    if(closeBtn) closeBtn.addEventListener('click', closeNewsModal);
+    if(backdrop) backdrop.addEventListener('click', closeNewsModal);
+    
+    // ESC 鍵關閉
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !document.getElementById('news-modal').classList.contains('hidden')) {
+            closeNewsModal();
+        }
+    });
 }
 
 // 渲染: 檔案下載
@@ -112,9 +375,25 @@ async function renderDownloads() {
         
         items.forEach(row => {
             const name = row['檔案名稱'] || row['Column1'] || '未知檔案';
-            const link = row['檔案連結'] || row['Column2'] || '#';
+            let link = row['檔案連結'] || row['Column2'] || '#';
             const type = (row['檔案類型'] || row['Column3'] || '').toLowerCase();
             
+            // 嘗試將 Google Drive 連結轉換為直接下載連結
+            if (link.includes('drive.google.com/file/d/')) {
+                const idMatch = link.match(/file\/d\/([a-zA-Z0-9_-]+)/);
+                if (idMatch && idMatch[1]) {
+                    link = `https://drive.google.com/uc?export=download&id=${idMatch[1]}`;
+                }
+            } else if (link.includes('drive.google.com/open?id=')) {
+                try {
+                    const urlParams = new URLSearchParams(link.split('?')[1]);
+                    const id = urlParams.get('id');
+                    if (id) {
+                        link = `https://drive.google.com/uc?export=download&id=${id}`;
+                    }
+                } catch(e) {}
+            }
+
             let fileIcon = 'fa-file';
             let iconColor = 'text-gray-400';
             if(type.includes('pdf')) { fileIcon = 'fa-file-pdf'; iconColor = 'text-red-500'; }
@@ -273,6 +552,7 @@ function setupUI() {
 // 初始化
 document.addEventListener('DOMContentLoaded', () => {
     setupUI();
+    initModal();
     // Fetch and render data
     renderNews();
     renderDownloads();
