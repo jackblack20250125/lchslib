@@ -73,8 +73,8 @@ function renderNewsItemHtml(item) {
         <!-- Date & Tag (Left/Top) -->
         <div class="flex items-center md:flex-col md:items-start md:w-32 flex-shrink-0 gap-3 md:gap-2">
             <div class="flex flex-wrap items-center gap-2">
-                ${item.isPinned ? '<span class="px-3 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-600"><i class="fa-solid fa-thumbtack mr-1"></i>置頂</span>' : ''}
-                <span class="px-3 py-1 rounded-full text-xs font-bold ${displayTagColor}">${displayTag}</span>
+                ${item.isPinned ? '<span class="px-3 py-1 rounded-full text-sm font-bold bg-rose-100 text-rose-600"><i class="fa-solid fa-thumbtack mr-1"></i>置頂</span>' : ''}
+                <span class="px-3 py-1 rounded-full text-sm font-bold ${displayTagColor}">${displayTag}</span>
             </div>
             <span class="text-sm text-gray-500 font-en font-medium"><i class="fa-regular fa-calendar md:hidden mr-1"></i>${item.date}</span>
         </div>
@@ -516,7 +516,7 @@ async function renderOrg() {
 
         const taskLinks = [task1, task2].filter(t => t && t.startsWith('http'));
         const taskBtns = taskLinks.map((url, i) =>
-            `<a href="${url}" target="_blank" class="ml-2 text-xs px-2 py-0.5 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition-colors">工作執掌${taskLinks.length > 1 ? (i + 1) : ''} <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-0.5"></i></a>`
+            `<a href="${url}" target="_blank" class="ml-2 text-sm px-2 py-1 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition-colors">工作執掌${taskLinks.length > 1 ? (i + 1) : ''} <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-0.5"></i></a>`
         ).join('');
 
         html += `
@@ -561,7 +561,7 @@ async function renderLinks() {
             <div class="absolute right-0 top-0 w-16 h-16 bg-gradient-to-br from-transparent to-orange-100 rounded-bl-full opacity-50 transition-all group-hover:scale-150"></div>
             <div class="flex items-start justify-between relative z-10">
                 <div>
-                    ${cat ? `<span class="text-xs font-bold text-accent mb-1 block">${cat}</span>` : ''}
+                    ${cat ? `<span class="text-sm font-bold text-accent mb-1 block">${cat}</span>` : ''}
                     <h4 class="font-bold text-gray-800 text-lg mb-1 group-hover:text-primary transition-colors">${name}</h4>
                     ${desc ? `<p class="text-sm text-gray-500 line-clamp-1">${desc}</p>` : ''}
                 </div>
