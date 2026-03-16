@@ -31,6 +31,13 @@ async function fetchSheetData(sheetName) {
 
 // Helper function to find cell value safely based on possible column keywords
 function getCellValue(row, keywords, fallbackColIndex) {
+    // 1. 先嘗試完全符合欄位名稱 (exact match)
+    for (const kw of keywords) {
+        if (row[kw] !== undefined && row[kw] !== null) {
+            return row[kw] || '';
+        }
+    }
+    // 2. 再嘗試包含字串 (contains match)
     for (const key in row) {
         if (keywords.some(kw => key.includes(kw))) {
             return row[key] || '';
@@ -145,13 +152,18 @@ async function renderNews() {
         const isShow = isShowRaw.toString().toUpperCase() !== 'FALSE';
         if (!isShow) return;
 
-        const date = getCellValue(row, ['公告日期', '日期'], 1);
+        // 公告日期：優先用「公告日期」欄，如果已刪除則用「時間戳記」
+        let date = getCellValue(row, ['公告日期', '日期'], 1);
+        if (!date) date = getCellValue(row, ['時間戳記'], 0);
+        // 時間戳記格式如 "2026/3/14 下午 7:22:54"，只取日期部分
+        if (date && date.includes(' ')) date = date.split(' ')[0];
         const tag = getCellValue(row, ['分類'], 2) || '公告';
         const title = getCellValue(row, ['標題'], 3) || '未命名公告';
         const content = getCellValue(row, ['詳細內容'], 4) || '';
         const media = getCellValue(row, ['照片', '檔案'], 5) || '';
-        const useSchoolLinkRaw = getCellValue(row, ['使用校網'], 6);
+        const useSchoolLinkRaw = getCellValue(row, ['使用校網連結', '使用校網'], 6);
         const isSchoolLink = useSchoolLinkRaw.toString().includes('是') || useSchoolLinkRaw.toString().toUpperCase() === 'TRUE';
+        // 用「校網連結」 exact match 防止誤抓「使用校網連結？」欄位
         const schoolLink = getCellValue(row, ['校網連結'], 7) || '#';
         const optionalLink = getCellValue(row, ['連結(非必須)', '其他連結'], 8) || '';
         const isPinnedRaw = getCellValue(row, ['置頂'], 9);
