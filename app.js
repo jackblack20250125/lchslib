@@ -49,8 +49,11 @@ function renderNewsItemHtml(item) {
     let tagColor = 'bg-sky-100 text-primary';
     if(item.tag.includes('活動')) tagColor = 'bg-orange-100 text-accent';
     if(item.tag.includes('競賽') || item.tag.includes('榮譽') || item.tag.includes('得獎')) tagColor = 'bg-purple-100 text-purple-600';
-
+    
+    // 校網公告自動覆寫分類謙
     const isSchoolLink = item.isSchoolLink && item.schoolLink !== '#' && item.schoolLink !== '';
+    const displayTag = isSchoolLink ? '校網公告' : item.tag;
+    const displayTagColor = isSchoolLink ? 'bg-emerald-100 text-emerald-700' : tagColor;
     const clickAttr = isSchoolLink ? `href="${item.schoolLink}" target="_blank"` : `href="javascript:void(0)" onclick="openNewsModal(${item.id})"`;
     const actionText = isSchoolLink ? '前往校網' : '閱讀詳情';
     const WrapperTag = isSchoolLink ? 'a' : 'div';
@@ -64,7 +67,7 @@ function renderNewsItemHtml(item) {
         <div class="flex items-center md:flex-col md:items-start md:w-32 flex-shrink-0 gap-3 md:gap-2">
             <div class="flex flex-wrap items-center gap-2">
                 ${item.isPinned ? '<span class="px-3 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-600"><i class="fa-solid fa-thumbtack mr-1"></i>置頂</span>' : ''}
-                <span class="px-3 py-1 rounded-full text-xs font-bold ${tagColor}">${item.tag}</span>
+                <span class="px-3 py-1 rounded-full text-xs font-bold ${displayTagColor}">${displayTag}</span>
             </div>
             <span class="text-sm text-gray-500 font-en font-medium"><i class="fa-regular fa-calendar md:hidden mr-1"></i>${item.date}</span>
         </div>
