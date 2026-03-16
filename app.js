@@ -101,6 +101,7 @@ function renderNewsItemHtml(item) {
 function updateNewsDisplay() {
     const container = document.getElementById('news-container');
     const loadMoreContainer = document.getElementById('news-load-more-container');
+    const collapseContainer = document.getElementById('news-collapse-container');
     
     // 限制首頁顯示筆數，最大不超過資料總數或 30 筆
     const displayCount = Math.min(newsVisibleCount, newsData.length, NEWS_MAX_ITEMS);
@@ -113,11 +114,20 @@ function updateNewsDisplay() {
     
     container.innerHTML = html;
 
-    // 控制「載入更多」按鈕顯示與隱藏
+    // 控制「載入更多」按鈕
     if (newsVisibleCount < newsData.length && newsVisibleCount < NEWS_MAX_ITEMS) {
         loadMoreContainer.classList.remove('hidden');
     } else {
         loadMoreContainer.classList.add('hidden');
+    }
+
+    // 控制「收合」按鈕：當顯示超過3筆時才顯示
+    if (collapseContainer) {
+        if (displayCount > 3) {
+            collapseContainer.classList.remove('hidden');
+        } else {
+            collapseContainer.classList.add('hidden');
+        }
     }
 }
 
@@ -125,6 +135,14 @@ function updateNewsDisplay() {
 function loadMoreNews() {
     newsVisibleCount = NEWS_MAX_ITEMS;
     updateNewsDisplay();
+}
+
+// 點擊「收合」按鈕
+function collapseNews() {
+    newsVisibleCount = 3;
+    updateNewsDisplay();
+    // 滾回最新消息標題
+    document.getElementById('news').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // 渲染: 最新消息
