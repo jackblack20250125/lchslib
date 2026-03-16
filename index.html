@@ -477,39 +477,6 @@
         </div>
     </section>
 
-    <!-- Gallery Section -->
-    <section id="gallery" class="py-32 bg-white relative border-t border-slate-100">
-        <div class="max-w-screen-2xl mx-auto px-6 lg:px-12 relative z-10">
-            <div class="mb-20">
-                <h2 class="text-5xl md:text-6xl font-black text-slate-900 mb-4 tracking-tight">環境剪影</h2>
-                <p class="text-xl text-slate-500 font-display font-medium tracking-wide uppercase">Library Environment</p>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Gallery Item 1 -->
-                <div class="group relative overflow-hidden rounded-3xl shadow-lg shadow-slate-200/50 aspect-[4/3] bg-slate-100 border border-slate-100">
-                    <img src="img/圖書館環境01.jpg" alt="圖書館環境 1" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-                </div>
-                <!-- Gallery Item 2 -->
-                <div class="group relative overflow-hidden rounded-3xl shadow-lg shadow-slate-200/50 aspect-[4/3] bg-slate-100 border border-slate-100">
-                    <img src="img/圖書館環境02.jpg" alt="圖書館環境 2" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-                </div>
-                <!-- Gallery Item 3 -->
-                <div class="group relative overflow-hidden rounded-3xl shadow-lg shadow-slate-200/50 aspect-[4/3] bg-slate-100 border border-slate-100">
-                    <img src="img/圖書館環境03.jpg" alt="圖書館環境 3" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-                </div>
-                <!-- Gallery Item 4 -->
-                <div class="group relative overflow-hidden rounded-3xl shadow-lg shadow-slate-200/50 aspect-[4/3] bg-slate-100 border border-slate-100">
-                    <img src="img/圖書館環境04.jpg" alt="圖書館環境 4" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Downloads & Links Section -->
     <section id="downloads" class="py-32 bg-white">
         <div class="max-w-screen-2xl mx-auto px-6 lg:px-12">
@@ -566,6 +533,47 @@
     </section>
 
 
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-32 bg-slate-50 relative border-t border-slate-200">
+        <div class="max-w-screen-2xl mx-auto px-6 lg:px-12 relative z-10">
+            <div class="mb-20">
+                <h2 class="text-5xl md:text-6xl font-black text-slate-900 mb-4 tracking-tight">環境剪影</h2>
+                <p class="text-xl text-slate-500 font-display font-medium tracking-wide uppercase">Library Environment</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Gallery Item 1 -->
+                <div class="group relative overflow-hidden rounded-3xl shadow-lg shadow-slate-200/50 aspect-[4/3] bg-white border border-slate-100 cursor-pointer" onclick="openLightbox('img/圖書館環境01.jpg', '圖書館環境 1')">
+                    <img src="img/圖書館環境01.jpg" alt="圖書館環境 1" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass-plus text-white text-4xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform scale-50 group-hover:scale-100"></i>
+                    </div>
+                </div>
+                <!-- Gallery Item 2 -->
+                <div class="group relative overflow-hidden rounded-3xl shadow-lg shadow-slate-200/50 aspect-[4/3] bg-white border border-slate-100 cursor-pointer" onclick="openLightbox('img/圖書館環境02.jpg', '圖書館環境 2')">
+                    <img src="img/圖書館環境02.jpg" alt="圖書館環境 2" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none flex items-center justify-center">
+                         <i class="fa-solid fa-magnifying-glass-plus text-white text-4xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform scale-50 group-hover:scale-100"></i>
+                    </div>
+                </div>
+                <!-- Gallery Item 3 -->
+                <div class="group relative overflow-hidden rounded-3xl shadow-lg shadow-slate-200/50 aspect-[4/3] bg-white border border-slate-100 cursor-pointer" onclick="openLightbox('img/圖書館環境03.jpg', '圖書館環境 3')">
+                    <img src="img/圖書館環境03.jpg" alt="圖書館環境 3" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none flex items-center justify-center">
+                         <i class="fa-solid fa-magnifying-glass-plus text-white text-4xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform scale-50 group-hover:scale-100"></i>
+                    </div>
+                </div>
+                <!-- Gallery Item 4 -->
+                <div class="group relative overflow-hidden rounded-3xl shadow-lg shadow-slate-200/50 aspect-[4/3] bg-white border border-slate-100 cursor-pointer" onclick="openLightbox('img/圖書館環境04.jpg', '圖書館環境 4')">
+                    <img src="img/圖書館環境04.jpg" alt="圖書館環境 4" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none flex items-center justify-center">
+                         <i class="fa-solid fa-magnifying-glass-plus text-white text-4xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform scale-50 group-hover:scale-100"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="bg-white pt-24 pb-12 border-t border-slate-200">
@@ -682,6 +690,74 @@
             </div>
         </div>
     </div>
+
+    <!-- Image Lightbox Modal -->
+    <div id="lightbox-modal" class="fixed inset-0 z-[110] hidden items-center justify-center bg-slate-900/90 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <!-- Close Button -->
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors z-[120]">
+            <i class="fa-solid fa-xmark text-2xl"></i>
+        </button>
+        <!-- Image Container -->
+        <div class="relative w-full max-w-6xl max-h-[90vh] mx-4 flex flex-col items-center transform scale-95 opacity-0 transition-all duration-300" id="lightbox-content">
+            <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl">
+            <p id="lightbox-caption" class="text-white text-lg font-medium mt-4 bg-black/50 px-6 py-2 rounded-full backdrop-blur-md"></p>
+        </div>
+    </div>
+
+    <script>
+        // Lightbox functionality
+        const lightboxModal = document.getElementById('lightbox-modal');
+        const lightboxContent = document.getElementById('lightbox-content');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxCaption = document.getElementById('lightbox-caption');
+
+        function openLightbox(imgSrc, altText) {
+            lightboxImg.src = imgSrc;
+            lightboxCaption.textContent = altText;
+            
+            // Show modal
+            lightboxModal.classList.remove('hidden');
+            lightboxModal.classList.add('flex');
+            
+            // Trigger animation
+            setTimeout(() => {
+                lightboxModal.classList.remove('opacity-0');
+                lightboxContent.classList.remove('scale-95', 'opacity-0');
+            }, 10);
+            
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            // Reverse animation
+            lightboxModal.classList.add('opacity-0');
+            lightboxContent.classList.add('scale-95', 'opacity-0');
+            
+            // Hide modal after animation
+            setTimeout(() => {
+                lightboxModal.classList.remove('flex');
+                lightboxModal.classList.add('hidden');
+                lightboxImg.src = '';
+                // Restore body scroll
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        // Close when clicking outside image
+        lightboxModal.addEventListener('click', (e) => {
+            if (e.target === lightboxModal || e.target.parentElement === lightboxModal) {
+                closeLightbox();
+            }
+        });
+        
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !lightboxModal.classList.contains('hidden')) {
+                closeLightbox();
+            }
+        });
+    </script>
 
     <!-- Use the existing app.js which handles dynamic content injection -->
     <script src="app.js"></script>
