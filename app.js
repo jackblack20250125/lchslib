@@ -56,13 +56,16 @@ function renderNewsItemHtml(item) {
     const WrapperTag = isSchoolLink ? 'a' : 'div';
 
     return `
-    <${WrapperTag} ${isSchoolLink ? clickAttr : `onclick="openNewsModal(${item.id})"`} class="group bg-white rounded-2xl p-5 md:p-6 border border-gray-100 hover:border-primary/30 shadow-sm hover:shadow-md transition-all flex flex-col md:flex-row md:items-center gap-4 cursor-pointer relative overflow-hidden">
+    <${WrapperTag} ${isSchoolLink ? clickAttr : `onclick="openNewsModal(${item.id})"`} class="group bg-white rounded-2xl p-5 md:p-6 border ${item.isPinned ? 'border-amber-200 bg-amber-50/30 ring-1 ring-amber-100 shadow-amber-100/50' : 'border-gray-100'} hover:border-primary/30 shadow-sm hover:shadow-md transition-all flex flex-col md:flex-row md:items-center gap-4 cursor-pointer relative overflow-hidden">
         <!-- Hover Gradient -->
         <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-sky-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
         
         <!-- Date & Tag (Left/Top) -->
         <div class="flex items-center md:flex-col md:items-start md:w-32 flex-shrink-0 gap-3 md:gap-2">
-            <span class="px-3 py-1 rounded-full text-xs font-bold ${tagColor}">${item.tag}</span>
+            <div class="flex flex-wrap items-center gap-2">
+                ${item.isPinned ? '<span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-600"><i class="fa-solid fa-thumbtack mr-1"></i>置頂</span>' : ''}
+                <span class="px-3 py-1 rounded-full text-xs font-bold ${tagColor}">${item.tag}</span>
+            </div>
             <span class="text-sm text-gray-500 font-en font-medium"><i class="fa-regular fa-calendar md:hidden mr-1"></i>${item.date}</span>
         </div>
         
@@ -148,6 +151,8 @@ async function renderNews() {
         const isSchoolLink = useSchoolLinkRaw.toString().includes('是') || useSchoolLinkRaw.toString().toUpperCase() === 'TRUE';
         const schoolLink = getCellValue(row, ['校網連結'], 7) || '#';
         const optionalLink = getCellValue(row, ['連結(非必須)', '其他連結'], 8) || '';
+        const isPinnedRaw = getCellValue(row, ['置頂'], 9);
+        const isPinned = isPinnedRaw.toString().includes('是') || isPinnedRaw.toString().toUpperCase() === 'TRUE';
         
         // 產生摘要
         let excerpt = content.replace(/(<([^>]+)>)/gi, "").substring(0, 80);
@@ -167,14 +172,18 @@ async function renderNews() {
             isSchoolLink,
             schoolLink,
             optionalLink,
-            excerpt
+            excerpt,
+            isPinned
         };
         
         newsData.push(newsItem);
     });
 
-    // 依據日期由新到舊排序
+    // 依據日期由新到舊排序，置頂文章優先
     newsData.sort((a, b) => {
+        if (a.isPinned && !b.isPinned) return -1;
+        if (!a.isPinned && b.isPinned) return 1;
+
         const dateA = new Date(a.date);
         const dateB = new Date(b.date);
         
