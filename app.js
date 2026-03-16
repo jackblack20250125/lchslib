@@ -382,16 +382,28 @@ async function renderDownloads() {
             if (link.includes('drive.google.com/file/d/')) {
                 const idMatch = link.match(/file\/d\/([a-zA-Z0-9_-]+)/);
                 if (idMatch && idMatch[1]) {
-                    link = `https://drive.google.com/uc?export=download&id=${idMatch[1]}`;
+                    let qs = '';
+                    if (link.includes('resourcekey=')) {
+                        const rkMatch = link.match(/resourcekey=([^&]+)/);
+                        if (rkMatch && rkMatch[1]) qs = `&resourcekey=${rkMatch[1]}`;
+                    }
+                    link = `https://drive.google.com/uc?export=download&id=${idMatch[1]}${qs}`;
                 }
             } else if (link.includes('drive.google.com/open?id=')) {
                 try {
                     const urlParams = new URLSearchParams(link.split('?')[1]);
                     const id = urlParams.get('id');
+                    let qs = '';
+                    if (urlParams.has('resourcekey')) {
+                         qs = `&resourcekey=${urlParams.get('resourcekey')}`;
+                    }
                     if (id) {
-                        link = `https://drive.google.com/uc?export=download&id=${id}`;
+                        link = `https://drive.google.com/uc?export=download&id=${id}${qs}`;
                     }
                 } catch(e) {}
+            } else if (link.includes('github.com') && link.includes('/blob/')) {
+                // 將 GitHub blob 連結轉換為可以下載的 raw 連結
+                link = link.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/');
             }
 
             let fileIcon = 'fa-file';
@@ -497,7 +509,11 @@ function setupOpacLinks() {
     function checkOpacConnection(e) {
         e.preventDefault();
         const isForm = this.tagName === 'FORM';
-        const targetUrl = isForm ? this.action : this.href;
+        // 對於表單，如果 action 以問號結尾或只有網址，直接使用基底 action
+        let targetUrl = isForm ? this.action : this.href;
+        if(isForm && targetUrl.endsWith('?')) {
+             targetUrl = targetUrl.slice(0, -1);
+        }
         const targetWindow = this.target || '_blank';
         
         // Timeout promise
