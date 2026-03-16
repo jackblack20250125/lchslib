@@ -513,38 +513,64 @@ function setupUI() {
     });
 }
 
-// 檢查館藏查詢系統網路狀態
+// 檢查是否為校內 IP 並設定 OPAC 相關連結與介面
 function setupOpacLinks() {
-    function checkOpacConnection(e) {
-        e.preventDefault();
-        const isForm = this.tagName === 'FORM';
-        // 對於表單，如果 action 以問號結尾或只有網址，直接使用基底 action
-        let targetUrl = isForm ? this.action : this.href;
-        if(isForm && targetUrl.endsWith('?')) {
-             targetUrl = targetUrl.slice(0, -1);
-        }
-        const targetWindow = this.target || '_blank';
-        
-        // Timeout promise
-        const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 1500));
-        
-        // Fetch promise (IP domain only for fastest response check)
-        const fetchPromise = fetch('http://192.168.11.242', { mode: 'no-cors' });
-        
-        Promise.race([fetchPromise, timeout])
-            .then(() => {
-                window.open(targetUrl, targetWindow);
-            })
-            .catch(() => {
-                alert('【查詢系統僅限校內網路連線使用】');
-            });
-    }
+    const opacBtn = document.getElementById('opac-btn');
+    const mobileOpacLink = document.getElementById('mobile-opac-link');
+    const opacSearch = document.getElementById('opac-search');
+    const opacHint = document.getElementById('opac-hint');
+    const opacCard = document.getElementById('opac-card');
+    const searchBtn = document.getElementById('opac-search-btn');
 
-    const anchors = document.querySelectorAll('a[href^="http://192.168.11.242"]');
-    anchors.forEach(a => a.addEventListener('click', checkOpacConnection));
-    
-    const forms = document.querySelectorAll('form[action^="http://192.168.11.242"]');
-    forms.forEach(f => f.addEventListener('submit', checkOpacConnection));
+    // 預設先隱藏所有 OPAC 相關按鈕與搜尋框，只顯示提示
+    if(opacBtn) opacBtn.style.display = 'none';
+    if(mobileOpacLink) mobileOpacLink.style.display = 'none';
+    if(opacSearch) opacSearch.style.display = 'none';
+
+    // 取得使用者真實公網 IP
+    fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => {
+            const ip = data.ip;
+            // 檢查是否為學校 IP
+            if (ip.startsWith('163.16.72.')) {
+                // 是校內 IP：顯示按鈕與搜尋，隱藏警告提示
+                if(opacBtn) opacBtn.style.display = 'flex';
+                if(mobileOpacLink) mobileOpacLink.style.display = 'inline-flex';
+                if(opacSearch) opacSearch.style.display = 'block';
+                if(opacHint) opacHint.style.display = 'none';
+
+                // 綁定「萬本藏書」卡片點擊事件
+                if (opacCard) {
+                    opacCard.classList.add('cursor-pointer');
+                    opacCard.addEventListener('click', () => {
+                        window.open('http://192.168.11.242/webopac', '_blank');
+                    });
+                }
+
+                // 綁定快速查詢按鈕點擊事件 (避免直接使用 form 送出產生 HTTPS 警告)
+                if (searchBtn) {
+                    searchBtn.addEventListener('click', () => {
+                        // 這裡可以根據需要組合搜尋參數，這裡先直接導向首頁
+                        window.open('http://192.168.11.242/webopac/', '_blank');
+                    });
+                }
+                
+                // 讓舊有的 a 標籤直接連過去
+                const anchors = document.querySelectorAll('a[href^="http://192.168.11.242"]');
+                anchors.forEach(a => a.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.open(a.href, a.target || '_blank');
+                }));
+            } else {
+                // 非校內 IP：保持原本的隱藏狀態 (只顯示 hint)
+                console.log("非校內連線", ip);
+            }
+        })
+        .catch(err => {
+            console.error("無法取得 IP 資訊:", err);
+            // 失敗時視同非校內
+        });
 }
 
 // 初始化
