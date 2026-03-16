@@ -29,6 +29,16 @@ async function fetchSheetData(sheetName) {
     }
 }
 
+// Helper function to find cell value safely based on possible column keywords
+function getCellValue(row, keywords, fallbackColIndex) {
+    for (const key in row) {
+        if (keywords.some(kw => key.includes(kw))) {
+            return row[key] || '';
+        }
+    }
+    return row[`Column${fallbackColIndex}`] || '';
+}
+
 // 全域變數儲存新聞資料，以供 Modal 使用
 let newsData = [];
 let newsVisibleCount = 3; // 預設顯示3筆
@@ -124,30 +134,20 @@ async function renderNews() {
     newsData = [];
     newsVisibleCount = 3; // 重置為 3 筆
     
-    // Helper function to find cell value safely based on possible column keywords
-    const getVal = (row, keywords, fallbackColIndex) => {
-        for (const key in row) {
-            if (keywords.some(kw => key.includes(kw))) {
-                return row[key] || '';
-            }
-        }
-        return row[`Column${fallbackColIndex}`] || '';
-    };
-
     displayRows.forEach(row => {
-        const isShowRaw = getVal(row, ['是否顯示'], 9);
+        const isShowRaw = getCellValue(row, ['是否顯示'], 9);
         const isShow = isShowRaw.toString().toUpperCase() !== 'FALSE';
         if (!isShow) return;
 
-        const date = getVal(row, ['公告日期', '日期'], 1);
-        const tag = getVal(row, ['分類'], 2) || '公告';
-        const title = getVal(row, ['標題'], 3) || '未命名公告';
-        const content = getVal(row, ['詳細內容'], 4) || '';
-        const media = getVal(row, ['照片', '檔案'], 5) || '';
-        const useSchoolLinkRaw = getVal(row, ['使用校網'], 6);
+        const date = getCellValue(row, ['公告日期', '日期'], 1);
+        const tag = getCellValue(row, ['分類'], 2) || '公告';
+        const title = getCellValue(row, ['標題'], 3) || '未命名公告';
+        const content = getCellValue(row, ['詳細內容'], 4) || '';
+        const media = getCellValue(row, ['照片', '檔案'], 5) || '';
+        const useSchoolLinkRaw = getCellValue(row, ['使用校網'], 6);
         const isSchoolLink = useSchoolLinkRaw.toString().includes('是') || useSchoolLinkRaw.toString().toUpperCase() === 'TRUE';
-        const schoolLink = getVal(row, ['校網連結'], 7) || '#';
-        const optionalLink = getVal(row, ['連結(非必須)', '其他連結'], 8) || '';
+        const schoolLink = getCellValue(row, ['校網連結'], 7) || '#';
+        const optionalLink = getCellValue(row, ['連結(非必須)', '其他連結'], 8) || '';
         
         // 產生摘要
         let excerpt = content.replace(/(<([^>]+)>)/gi, "").substring(0, 80);
@@ -365,7 +365,7 @@ async function renderDownloads() {
     // Group by category manually
     let categories = {};
     rows.forEach(row => {
-        const cat = row['分類'] || row['Column0'] || '未分類';
+        const cat = getCellValue(row, ['分類'], 0) || '未分類';
         if(!categories[cat]) categories[cat] = [];
         categories[cat].push(row);
     });
@@ -374,9 +374,9 @@ async function renderDownloads() {
         html += `<div class="mb-6"><h4 class="text-lg font-bold text-gray-800 border-l-4 border-primary pl-3 mb-4">${cat}</h4><div class="space-y-3">`;
         
         items.forEach(row => {
-            const name = row['檔案名稱'] || row['Column1'] || '未知檔案';
-            let link = row['檔案連結'] || row['Column2'] || '#';
-            const type = (row['檔案類型'] || row['Column3'] || '').toLowerCase();
+            const name = getCellValue(row, ['名稱', '檔案名稱'], 1) || '未知檔案';
+            let link = getCellValue(row, ['連結', '網址'], 2) || '#';
+            const type = (getCellValue(row, ['類型', '格式'], 3)).toLowerCase();
             
             // 嘗試將 Google Drive 連結轉換為直接下載連結
             if (link.includes('drive.google.com/file/d/')) {
@@ -436,10 +436,10 @@ async function renderLinks() {
 
     let html = '';
     rows.forEach(row => {
-        const cat = row['分類'] || row['Column0'] || '';
-        const name = row['網站名稱'] || row['Column1'] || '未知連結';
-        const link = row['網址連結'] || row['Column2'] || '#';
-        const desc = row['備註描述'] || row['Column3'] || '';
+        const cat = getCellValue(row, ['分類'], 0);
+        const name = getCellValue(row, ['名稱', '網站名稱'], 1) || '未知連結';
+        const link = getCellValue(row, ['連結', '網址', '網址連結'], 2) || '#';
+        const desc = getCellValue(row, ['備註', '描述', '備註描述'], 3);
 
         html += `
         <a href="${link}" target="_blank" class="block p-5 rounded-2xl border border-gray-200 link-card bg-white relative overflow-hidden group">
@@ -460,64 +460,7 @@ async function renderLinks() {
     container.innerHTML = html;
 }
 
-// 渲染: 相片牆
-async function renderGallery() {
-    const container = document.getElementById('gallery-container');
-    const loading = document.getElementById('gallery-loading');
-    const rows = await fetchSheetData('活動照片');
-    
-    loading.classList.add('hidden');
-    container.classList.remove('hidden');
 
-    if (!rows || rows.length === 0) {
-        container.innerHTML = `<div class="text-center text-gray-500 py-8 border-2 border-dashed border-gray-700/50 rounded-3xl col-span-1 sm:col-span-2 lg:col-span-3">無相片資料。請確認試算表名稱為「活動照片」。</div>`;
-        return;
-    }
-
-    let html = '';
-    rows.slice(0, 9).forEach(row => { // Limit to 9 for layout
-        const title = row['相簿/活動名稱'] || row['Column0'] || '';
-        const desc = row['照片名稱/描述'] || row['Column1'] || '';
-        const imgLink = row['圖片連結'] || row['Column2'] || '';
-        const albumLink = row['相簿網址'] || row['Column3'] || ''; // 新增相簿網址欄位
-        
-        if(!imgLink) return;
-
-        // Try to convert Google Drive link to direct image viewing link
-        let src = imgLink;
-        if (imgLink.includes('drive.google.com/file/d/')) {
-            const idMatch = imgLink.match(/file\/d\/([a-zA-Z0-9_-]+)/);
-            if (idMatch && idMatch[1]) {
-                src = `https://drive.google.com/uc?export=view&id=${idMatch[1]}`;
-            }
-        } else if (imgLink.includes('drive.google.com/open?id=')) {
-            const urlParams = new URLSearchParams(imgLink.split('?')[1]);
-            const id = urlParams.get('id');
-            if (id) {
-                src = `https://drive.google.com/uc?export=view&id=${id}`;
-            }
-        }
-        
-        // 如果有相簿網址，將整個卡片變成一個連結 <a>；如果沒有，維持 <div>
-        const CardTag = albumLink ? 'a' : 'div';
-        const linkAttrs = albumLink ? `href="${albumLink}" target="_blank"` : '';
-        const hoverIcon = albumLink ? `<div class="mt-2 text-primary opacity-0 group-hover:opacity-100 transition-opacity"><i class="fa-solid fa-link mr-1"></i>前往相簿</div>` : '';
-
-        html += `
-        <${CardTag} ${linkAttrs} class="break-inside-avoid block mb-6 bg-gray-800 rounded-3xl overflow-hidden shadow-lg gallery-card group relative ${albumLink ? 'cursor-pointer' : ''}">
-            <div class="gallery-img-container">
-                <img src="${src}" alt="${title}" class="w-full h-auto object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/400x300?text=Image+Not+Found'">
-            </div>
-            <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent p-6 pt-16 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                <h4 class="text-white font-bold text-lg leading-tight mb-1">${title || desc}</h4>
-                ${title && desc ? `<p class="text-gray-300 text-sm line-clamp-2">${desc}</p>` : ''}
-                ${hoverIcon}
-            </div>
-        </${CardTag}>`;
-    });
-
-    container.innerHTML = html;
-}
 
 // Navbar Scroll Effect & Mobile Menu Logic
 function setupUI() {
@@ -549,13 +492,43 @@ function setupUI() {
     });
 }
 
+// 檢查館藏查詢系統網路狀態
+function setupOpacLinks() {
+    function checkOpacConnection(e) {
+        e.preventDefault();
+        const isForm = this.tagName === 'FORM';
+        const targetUrl = isForm ? this.action : this.href;
+        const targetWindow = this.target || '_blank';
+        
+        // Timeout promise
+        const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 1500));
+        
+        // Fetch promise (IP domain only for fastest response check)
+        const fetchPromise = fetch('http://192.168.11.242', { mode: 'no-cors' });
+        
+        Promise.race([fetchPromise, timeout])
+            .then(() => {
+                window.open(targetUrl, targetWindow);
+            })
+            .catch(() => {
+                alert('【查詢系統僅限校內網路連線使用】');
+            });
+    }
+
+    const anchors = document.querySelectorAll('a[href^="http://192.168.11.242"]');
+    anchors.forEach(a => a.addEventListener('click', checkOpacConnection));
+    
+    const forms = document.querySelectorAll('form[action^="http://192.168.11.242"]');
+    forms.forEach(f => f.addEventListener('submit', checkOpacConnection));
+}
+
 // 初始化
 document.addEventListener('DOMContentLoaded', () => {
     setupUI();
     initModal();
+    setupOpacLinks();
     // Fetch and render data
     renderNews();
     renderDownloads();
     renderLinks();
-    renderGallery();
 });

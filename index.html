@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-TW" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,9 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;700;900&display=swap"
+        rel="stylesheet">
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Tailwind CSS -->
@@ -39,16 +42,19 @@
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.5);
         }
+
         .text-gradient {
             background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 40%, #8b5cf6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+
         .hero-pattern {
             background-color: #f8fafc;
             background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm-91-4c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z' fill='%230ea5e9' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
         }
+
         .blob {
             position: absolute;
             filter: blur(60px);
@@ -56,10 +62,17 @@
             opacity: 0.5;
             animation: float 10s infinite ease-in-out alternate;
         }
+
         @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(30px, -30px) scale(1.1); }
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
         }
+
         .section-title {
             font-size: 3rem;
             font-weight: 900;
@@ -67,54 +80,72 @@
             position: relative;
             display: inline-block;
         }
+
         .glass-card {
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,1);
+            border: 1px solid rgba(255, 255, 255, 1);
             box-shadow: 0 20px 40px -10px rgba(14, 165, 233, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
         .glass-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 30px 50px -15px rgba(14, 165, 233, 0.2);
         }
+
         /* Style adjustments for injected elements */
-        #news-container .custom-card, #downloads-container .custom-card, #links-container .custom-card {
+        #news-container .custom-card,
+        #downloads-container .custom-card,
+        #links-container .custom-card {
             background: #fff;
             border-radius: 1.5rem;
             border: 1px solid #f1f5f9;
-            box-shadow: 0 10px 30px -5px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
         }
-        #news-container .custom-card:hover, #downloads-container .custom-card:hover, #links-container .custom-card:hover {
+
+        #news-container .custom-card:hover,
+        #downloads-container .custom-card:hover,
+        #links-container .custom-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 20px 40px -5px rgba(14,165,233,0.1);
+            box-shadow: 0 20px 40px -5px rgba(14, 165, 233, 0.1);
             border-color: #e0f2fe;
         }
     </style>
 </head>
-<body class="bg-bgLight text-slate-800 font-sans antialiased overflow-x-hidden selection:bg-primary selection:text-white">
+
+<body
+    class="bg-bgLight text-slate-800 font-sans antialiased overflow-x-hidden selection:bg-primary selection:text-white">
 
     <!-- Navbar -->
     <nav class="fixed w-full z-50 transition-all duration-300 glass-nav" id="navbar">
         <div class="max-w-screen-2xl mx-auto px-6 lg:px-12">
             <div class="flex justify-between items-center h-24">
-                <div class="flex-shrink-0 flex items-center gap-4 cursor-pointer group" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-                    <div class="w-12 h-12 bg-gradient-to-br from-primary to-blue-600 text-white rounded-2xl flex items-center justify-center text-2xl shadow-xl shadow-primary/30 transform group-hover:rotate-12 transition-transform duration-300">
+                <div class="flex-shrink-0 flex items-center gap-4 cursor-pointer group"
+                    onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                    <div
+                        class="w-12 h-12 bg-gradient-to-br from-primary to-blue-600 text-white rounded-2xl flex items-center justify-center text-2xl shadow-xl shadow-primary/30 transform group-hover:rotate-12 transition-transform duration-300">
                         <i class="fa-solid fa-book-open"></i>
                     </div>
                     <div>
-                        <h1 class="text-2xl font-black text-slate-900 tracking-tight leading-tight group-hover:text-primary transition-colors">路竹高中圖書館</h1>
-                        <p class="text-[11px] font-display font-semibold text-slate-500 tracking-[0.2em] uppercase">LCHS Library</p>
+                        <h1
+                            class="text-2xl font-black text-slate-900 tracking-tight leading-tight group-hover:text-primary transition-colors">
+                            路竹高中圖書館</h1>
+                        <p class="text-[11px] font-display font-semibold text-slate-500 tracking-[0.2em] uppercase">LCHS
+                            Library</p>
                     </div>
                 </div>
                 <div class="hidden lg:flex items-center space-x-10">
-                    <a href="#news" class="text-slate-600 font-medium hover:text-primary transition-colors hover:scale-105 transform duration-200">最新消息</a>
-                    <a href="#about" class="text-slate-600 font-medium hover:text-primary transition-colors hover:scale-105 transform duration-200">本館簡介</a>
-                    <a href="#downloads" class="text-slate-600 font-medium hover:text-primary transition-colors hover:scale-105 transform duration-200">資源下載</a>
-                    <a href="#gallery" class="text-slate-600 font-medium hover:text-primary transition-colors hover:scale-105 transform duration-200">活動花絮</a>
-                    
-                    <a href="http://192.168.11.242/webopac" target="_blank" class="px-8 py-3.5 bg-slate-900 hover:bg-primary text-white rounded-full font-medium transition-all duration-300 shadow-xl hover:shadow-primary/40 flex items-center gap-3">
+                    <a href="#news"
+                        class="text-slate-600 font-medium hover:text-primary transition-colors hover:scale-105 transform duration-200">最新消息</a>
+                    <a href="#about"
+                        class="text-slate-600 font-medium hover:text-primary transition-colors hover:scale-105 transform duration-200">本館簡介</a>
+                    <a href="#downloads"
+                        class="text-slate-600 font-medium hover:text-primary transition-colors hover:scale-105 transform duration-200">資源下載</a>
+
+                    <a href="http://192.168.11.242/webopac" target="_blank"
+                        class="px-8 py-3.5 bg-slate-900 hover:bg-primary text-white rounded-full font-medium transition-all duration-300 shadow-xl hover:shadow-primary/40 flex items-center gap-3">
                         <i class="fa-solid fa-magnifying-glass"></i>
                         <div class="flex flex-col items-start leading-none gap-0.5">
                             <span class="text-sm">館藏查詢</span>
@@ -124,21 +155,23 @@
                 </div>
                 <!-- Mobile menu button -->
                 <div class="lg:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-slate-900 p-2 focus:outline-none bg-slate-100 rounded-full w-12 h-12 flex items-center justify-center">
+                    <button id="mobile-menu-btn"
+                        class="text-slate-900 p-2 focus:outline-none bg-slate-100 rounded-full w-12 h-12 flex items-center justify-center">
                         <i class="fa-solid fa-bars text-xl"></i>
                     </button>
                 </div>
             </div>
         </div>
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-white/95 backdrop-blur-xl border-t border-slate-100 shadow-2xl absolute w-full z-40">
+        <div id="mobile-menu"
+            class="hidden lg:hidden bg-white/95 backdrop-blur-xl border-t border-slate-100 shadow-2xl absolute w-full z-40">
             <div class="px-6 py-8 space-y-4">
                 <a href="#news" class="block text-xl font-bold text-slate-800 hover:text-primary">最新消息</a>
                 <a href="#about" class="block text-xl font-bold text-slate-800 hover:text-primary">本館簡介</a>
                 <a href="#downloads" class="block text-xl font-bold text-slate-800 hover:text-primary">資源下載</a>
-                <a href="#gallery" class="block text-xl font-bold text-slate-800 hover:text-primary">活動花絮</a>
                 <hr class="border-slate-100 my-4">
-                <a href="http://192.168.11.242/webopac" target="_blank" class="inline-flex items-center gap-2 text-primary font-bold text-lg">
+                <a href="http://192.168.11.242/webopac" target="_blank"
+                    class="inline-flex items-center gap-2 text-primary font-bold text-lg">
                     <i class="fa-solid fa-magnifying-glass"></i> 館藏查詢系統
                 </a>
             </div>
@@ -149,13 +182,18 @@
     <section class="relative min-h-screen flex items-center pt-24 overflow-hidden hero-pattern">
         <!-- SVG Decorative Blobs -->
         <div class="blob bg-sky-300 w-[500px] h-[500px] rounded-full top-[-10%] left-[-10%]"></div>
-        <div class="blob bg-purple-200 w-[400px] h-[400px] rounded-full bottom-[10%] right-[5%] animation-delay-2000"></div>
-        <div class="blob bg-orange-200 w-[300px] h-[300px] rounded-full top-[30%] left-[50%] animation-delay-4000"></div>
+        <div class="blob bg-purple-200 w-[400px] h-[400px] rounded-full bottom-[10%] right-[5%] animation-delay-2000">
+        </div>
+        <div class="blob bg-orange-200 w-[300px] h-[300px] rounded-full top-[30%] left-[50%] animation-delay-4000">
+        </div>
 
         <!-- SVG Abstract Lines -->
-        <svg class="absolute top-0 w-full h-full object-cover z-0 opacity-40 pointer-events-none" viewBox="0 0 1440 800" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M-100 600C250 500 400 700 800 500C1200 300 1350 400 1600 200" stroke="url(#paint0_linear)" stroke-width="2" stroke-dasharray="10 10" />
-            <path d="M-100 650C250 550 400 750 800 550C1200 350 1350 450 1600 250" stroke="url(#paint1_linear)" stroke-width="1" />
+        <svg class="absolute top-0 w-full h-full object-cover z-0 opacity-40 pointer-events-none" viewBox="0 0 1440 800"
+            fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M-100 600C250 500 400 700 800 500C1200 300 1350 400 1600 200" stroke="url(#paint0_linear)"
+                stroke-width="2" stroke-dasharray="10 10" />
+            <path d="M-100 650C250 550 400 750 800 550C1200 350 1350 450 1600 250" stroke="url(#paint1_linear)"
+                stroke-width="1" />
             <defs>
                 <linearGradient id="paint0_linear" x1="-100" y1="600" x2="1600" y2="200" gradientUnits="userSpaceOnUse">
                     <stop stop-color="#0ea5e9" stop-opacity="0" />
@@ -174,60 +212,74 @@
             <div class="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
                 <!-- Text Content -->
                 <div class="lg:col-span-7 pt-12 lg:pt-0">
-                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 backdrop-blur-md border border-white shadow-sm mb-8">
+                    <div
+                        class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 backdrop-blur-md border border-white shadow-sm mb-8">
                         <span class="flex h-2 w-2 rounded-full bg-primary animate-ping"></span>
-                        <span class="text-sm font-bold text-slate-700 font-display tracking-wide uppercase">Welcome to Knowledge</span>
+                        <span class="text-sm font-bold text-slate-700 font-display tracking-wide uppercase">Welcome to
+                            Knowledge</span>
                     </div>
-                    
-                    <h1 class="text-5xl md:text-7xl lg:text-[5.5rem] font-black leading-[1.1] text-slate-900 mb-8 tracking-tighter">
+
+                    <h1
+                        class="text-5xl md:text-7xl lg:text-[5.5rem] font-black leading-[1.1] text-slate-900 mb-8 tracking-tighter">
                         探索知識的海洋 <br>
                         <span class="text-gradient">路竹高中圖書館</span>
                     </h1>
-                    
+
                     <p class="text-xl md:text-2xl text-slate-600 mb-12 font-medium leading-relaxed max-w-2xl">
                         豐富館藏、舒適空間、數位學習資源，伴你度過充實且精彩的高中生涯。讓我們一起打開世界的大門。
                     </p>
-                    
+
                     <!-- Search Widget -->
                     <div class="glass-card p-4 rounded-3xl max-w-2xl transform transition-all duration-500">
-                        <form action="http://192.168.11.242/webopac" target="_blank" class="flex flex-col sm:flex-row items-center gap-3">
+                        <form action="http://192.168.11.242/webopac/" target="_blank"
+                            class="flex flex-col sm:flex-row items-center gap-3">
                             <div class="relative w-full">
-                                <div class="absolute inset-y-0 left-6 flex items-center pointer-events-none text-slate-400">
+                                <div
+                                    class="absolute inset-y-0 left-6 flex items-center pointer-events-none text-slate-400">
                                     <i class="fa-solid fa-magnifying-glass text-lg"></i>
                                 </div>
-                                <input type="text" placeholder="尋找您感興趣的書籍、作者、關鍵字..." class="w-full pl-14 pr-6 py-5 bg-white rounded-2xl outline-none text-lg text-slate-700 placeholder-slate-400 focus:ring-4 focus:ring-primary/20 transition-shadow border-none" disabled>
+                                <input type="text" placeholder="尋找您感興趣的書籍、作者、關鍵字..."
+                                    class="w-full pl-14 pr-6 py-5 bg-white rounded-2xl outline-none text-lg text-slate-700 placeholder-slate-400 focus:ring-4 focus:ring-primary/20 transition-shadow border-none"
+                                    disabled>
                             </div>
-                            <button type="submit" class="w-full sm:w-auto px-10 py-5 bg-primary hover:bg-primaryDark text-white rounded-2xl font-bold text-lg transition-colors flex-shrink-0 shadow-lg shadow-primary/30 flex items-center justify-center gap-2 group">
+                            <button type="submit"
+                                class="w-full sm:w-auto px-10 py-5 bg-primary hover:bg-primaryDark text-white rounded-2xl font-bold text-lg transition-colors flex-shrink-0 shadow-lg shadow-primary/30 flex items-center justify-center gap-2 group">
                                 <span>快速查詢</span>
-                                <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                                <i
+                                    class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
                             </button>
                         </form>
                     </div>
-                    <div class="flex items-center gap-2 mt-5 text-sm font-medium text-slate-500 ml-4">
+                    <div class="flex items-center gap-2 mt-5 text-lg font-bold text-slate-700 ml-4">
                         <i class="fa-solid fa-shield-halved text-emerald-500"></i>
                         <p>查詢系統僅限校內網路連線使用</p>
                     </div>
                 </div>
-                
+
                 <!-- Graphic/Illustration -->
                 <div class="lg:col-span-5 hidden lg:block relative">
                     <div class="relative w-full max-w-lg mx-auto aspect-square">
                         <!-- Custom Abstract SVG Composition -->
-                        <svg viewBox="0 0 500 500" class="w-full h-full animate-[spin_60s_linear_infinite]" xmlns="http://www.w3.org/2000/svg">
+                        <svg viewBox="0 0 500 500" class="w-full h-full animate-[spin_60s_linear_infinite]"
+                            xmlns="http://www.w3.org/2000/svg">
                             <defs>
                                 <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
                                     <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:1" />
                                     <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
                                 </linearGradient>
                             </defs>
-                            <circle cx="250" cy="250" r="200" fill="none" stroke="url(#grad2)" stroke-width="2" stroke-dasharray="15 15" opacity="0.5"/>
-                            <circle cx="250" cy="250" r="150" fill="none" stroke="#f97316" stroke-width="1" stroke-dasharray="5 5" opacity="0.4"/>
+                            <circle cx="250" cy="250" r="200" fill="none" stroke="url(#grad2)" stroke-width="2"
+                                stroke-dasharray="15 15" opacity="0.5" />
+                            <circle cx="250" cy="250" r="150" fill="none" stroke="#f97316" stroke-width="1"
+                                stroke-dasharray="5 5" opacity="0.4" />
                         </svg>
-                        
+
                         <!-- Floating Cards overlay -->
                         <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="relative w-72 h-96 glass-card rounded-3xl p-6 flex flex-col items-center justify-center gap-6 shadow-2xl shadow-blue-900/10 rotate-[-6deg] hover:rotate-0 transition-transform duration-500 z-10">
-                                <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-sky-400 to-blue-600 flex items-center justify-center text-white text-4xl shadow-lg shadow-blue-500/30">
+                            <div
+                                class="relative w-72 h-96 glass-card rounded-3xl p-6 flex flex-col items-center justify-center gap-6 shadow-2xl shadow-blue-900/10 rotate-[-6deg] hover:rotate-0 transition-transform duration-500 z-10">
+                                <div
+                                    class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-sky-400 to-blue-600 flex items-center justify-center text-white text-4xl shadow-lg shadow-blue-500/30">
                                     <i class="fa-solid fa-swatchbook"></i>
                                 </div>
                                 <div class="text-center space-y-2">
@@ -235,9 +287,11 @@
                                     <p class="text-slate-500 font-medium">涵蓋各領域知識寶庫</p>
                                 </div>
                             </div>
-                            
-                            <div class="absolute -bottom-10 -right-10 w-48 h-48 glass-card rounded-3xl p-6 flex flex-col items-center justify-center gap-4 rotate-[12deg] hover:rotate-0 transition-transform duration-500 z-20">
-                                <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-orange-400 to-pink-500 flex items-center justify-center text-white text-2xl">
+
+                            <div
+                                class="absolute -bottom-10 -right-10 w-48 h-48 glass-card rounded-3xl p-6 flex flex-col items-center justify-center gap-4 rotate-[12deg] hover:rotate-0 transition-transform duration-500 z-20">
+                                <div
+                                    class="w-12 h-12 rounded-xl bg-gradient-to-tr from-orange-400 to-pink-500 flex items-center justify-center text-white text-2xl">
                                     <i class="fa-solid fa-laptop-code"></i>
                                 </div>
                                 <div class="text-center">
@@ -249,9 +303,10 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Scroll indicator -->
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400 animate-bounce">
+        <div
+            class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400 animate-bounce">
             <span class="text-xs font-bold tracking-widest uppercase font-display">Scroll Down</span>
             <i class="fa-solid fa-arrow-down"></i>
         </div>
@@ -263,27 +318,30 @@
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
                 <div>
                     <h2 class="text-5xl md:text-6xl font-black text-slate-900 mb-4 tracking-tight">最新消息</h2>
-                    <p class="text-xl text-slate-500 font-display font-medium tracking-wide uppercase">Latest Updates</p>
+                    <p class="text-xl text-slate-500 font-display font-medium tracking-wide uppercase">Latest Updates
+                    </p>
                 </div>
                 <div class="hidden md:block w-32 h-2bg-primary rounded-full bg-primary/20 relative overflow-hidden">
-                    <div class="w-1/2 h-full bg-primary absolute rounded-full animate-[pulse_2s_ease-in-out_infinite]"></div>
+                    <div class="w-1/2 h-full bg-primary absolute rounded-full animate-[pulse_2s_ease-in-out_infinite]">
+                    </div>
                 </div>
             </div>
-            
+
             <!-- Loading State -->
             <div id="news-loading" class="flex flex-col items-center justify-center py-24 text-slate-400 gap-4">
                 <i class="fa-solid fa-circle-notch fa-spin text-5xl text-primary"></i>
                 <span class="font-medium text-lg">載入最新消息中...</span>
             </div>
-            
+
             <!-- News List Container -->
             <div id="news-container" class="flex flex-col gap-4 hidden">
                 <!-- Items injected by JS -->
             </div>
-            
+
             <!-- Load More Button -->
             <div id="news-load-more-container" class="mt-12 text-center hidden">
-                <button id="news-load-more-btn" class="inline-flex items-center gap-2 px-8 py-3 bg-white border border-slate-200 hover:border-primary text-slate-600 hover:text-primary rounded-full font-bold transition-all shadow-sm hover:shadow-md group">
+                <button id="news-load-more-btn"
+                    class="inline-flex items-center gap-2 px-8 py-3 bg-white border border-slate-200 hover:border-primary text-slate-600 hover:text-primary rounded-full font-bold transition-all shadow-sm hover:shadow-md group">
                     <span>載入更多消息</span>
                     <i class="fa-solid fa-angle-down group-hover:translate-y-1 transition-transform"></i>
                 </button>
@@ -294,8 +352,9 @@
     <!-- About Section -->
     <section id="about" class="py-32 bg-slate-50 relative overflow-hidden">
         <!-- SVG Decor -->
-        <svg class="absolute right-0 top-0 -mr-64 -mt-32 w-[800px] h-[800px] text-slate-200 pointer-events-none opacity-50" fill="currentColor" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="50"/>
+        <svg class="absolute right-0 top-0 -mr-64 -mt-32 w-[800px] h-[800px] text-slate-200 pointer-events-none opacity-50"
+            fill="currentColor" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="50" />
         </svg>
 
         <div class="max-w-screen-2xl mx-auto px-6 lg:px-12 relative z-10">
@@ -307,9 +366,11 @@
             <div class="grid lg:grid-cols-12 gap-16 items-start">
                 <!-- Left Column -->
                 <div class="lg:col-span-7 space-y-12">
-                    <div class="bg-white p-10 md:p-14 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100 hover:shadow-2xl transition-shadow duration-500">
+                    <div
+                        class="bg-white p-10 md:p-14 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100 hover:shadow-2xl transition-shadow duration-500">
                         <div class="flex items-center gap-6 mb-10">
-                            <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-3xl">
+                            <div
+                                class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-3xl">
                                 <i class="fa-solid fa-clock-rotate-left"></i>
                             </div>
                             <h3 class="text-3xl font-black text-slate-800">歷史沿革</h3>
@@ -321,40 +382,47 @@
                         </div>
                     </div>
 
-                    <div class="bg-gradient-to-br from-orange-50 to-orange-100/50 p-10 md:p-14 rounded-[2rem] shadow-lg shadow-orange-100 border border-orange-200/50">
+                    <div
+                        class="bg-gradient-to-br from-orange-50 to-orange-100/50 p-10 md:p-14 rounded-[2rem] shadow-lg shadow-orange-100 border border-orange-200/50">
                         <div class="flex items-center gap-6 mb-10">
-                            <div class="w-16 h-16 bg-white text-orange-500 rounded-2xl flex items-center justify-center text-3xl shadow-sm">
+                            <div
+                                class="w-16 h-16 bg-white text-orange-500 rounded-2xl flex items-center justify-center text-3xl shadow-sm">
                                 <i class="fa-solid fa-flag"></i>
                             </div>
                             <h3 class="text-3xl font-black text-slate-800">工作目標</h3>
                         </div>
                         <ul class="space-y-6">
                             <li class="flex gap-5 items-start">
-                                <div class="w-8 h-8 rounded-full bg-orange-200 text-orange-600 flex items-center justify-center flex-shrink-0 mt-1">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-orange-200 text-orange-600 flex items-center justify-center flex-shrink-0 mt-1">
                                     <i class="fa-solid fa-check text-sm"></i>
                                 </div>
                                 <span class="text-lg text-slate-700 font-medium">提供教學及個人閱讀、研究所需的圖書資料。</span>
                             </li>
                             <li class="flex gap-5 items-start">
-                                <div class="w-8 h-8 rounded-full bg-orange-200 text-orange-600 flex items-center justify-center flex-shrink-0 mt-1">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-orange-200 text-orange-600 flex items-center justify-center flex-shrink-0 mt-1">
                                     <i class="fa-solid fa-check text-sm"></i>
                                 </div>
                                 <span class="text-lg text-slate-700 font-medium">協助學生根據個人興趣和課程上的需要選擇圖書資料。</span>
                             </li>
                             <li class="flex gap-5 items-start">
-                                <div class="w-8 h-8 rounded-full bg-orange-200 text-orange-600 flex items-center justify-center flex-shrink-0 mt-1">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-orange-200 text-orange-600 flex items-center justify-center flex-shrink-0 mt-1">
                                     <i class="fa-solid fa-check text-sm"></i>
                                 </div>
                                 <span class="text-lg text-slate-700 font-medium">指導讀者應用與檢索資訊的要領，培養終身學習的能力。</span>
                             </li>
                             <li class="flex gap-5 items-start">
-                                <div class="w-8 h-8 rounded-full bg-orange-200 text-orange-600 flex items-center justify-center flex-shrink-0 mt-1">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-orange-200 text-orange-600 flex items-center justify-center flex-shrink-0 mt-1">
                                     <i class="fa-solid fa-check text-sm"></i>
                                 </div>
                                 <span class="text-lg text-slate-700 font-medium">積極推動圖書館利用教育，培養學生自學能力。</span>
                             </li>
                             <li class="flex gap-5 items-start">
-                                <div class="w-8 h-8 rounded-full bg-orange-200 text-orange-600 flex items-center justify-center flex-shrink-0 mt-1">
+                                <div
+                                    class="w-8 h-8 rounded-full bg-orange-200 text-orange-600 flex items-center justify-center flex-shrink-0 mt-1">
                                     <i class="fa-solid fa-check text-sm"></i>
                                 </div>
                                 <span class="text-lg text-slate-700 font-medium">建立以讀者需求為導向的服務態度，提升服務品質。</span>
@@ -367,22 +435,29 @@
                 <div class="lg:col-span-5 sticky top-32">
                     <div class="bg-slate-900 rounded-[2.5rem] p-10 md:p-12 shadow-2xl relative overflow-hidden">
                         <!-- BG Decoration -->
-                        <div class="absolute -right-20 -top-20 w-80 h-80 bg-primary rounded-full blur-[80px] opacity-20"></div>
-                        <div class="absolute -left-20 -bottom-20 w-80 h-80 bg-purple-600 rounded-full blur-[80px] opacity-20"></div>
-                        
+                        <div
+                            class="absolute -right-20 -top-20 w-80 h-80 bg-primary rounded-full blur-[80px] opacity-20">
+                        </div>
+                        <div
+                            class="absolute -left-20 -bottom-20 w-80 h-80 bg-purple-600 rounded-full blur-[80px] opacity-20">
+                        </div>
+
                         <h3 class="text-3xl font-black text-white mb-8 relative z-10 flex items-center gap-4">
                             組織分工
-                            <span class="text-sm font-display text-slate-500 uppercase tracking-[0.3em] font-normal">Organization</span>
+                            <span
+                                class="text-sm font-display text-slate-500 uppercase tracking-[0.3em] font-normal">Organization</span>
                         </h3>
-                        
+
                         <p class="mb-10 text-slate-300 text-lg leading-relaxed relative z-10">
                             本館設教師兼主任一人，承校長之命綜理館務，另設置組長一人，協辦行政二人，助理一人，並成立圖書館委員會，以協助館務之興革與發展。
                         </p>
-                        
+
                         <div class="space-y-5 relative z-10">
                             <!-- Team Member Cards -->
-                            <div class="group bg-white/5 hover:bg-white/10 p-6 rounded-2xl border border-white/10 transition-colors duration-300 flex items-center gap-5">
-                                <div class="w-12 h-12 rounded-full bg-primary/20 text-primary flex items-center justify-center text-xl group-hover:bg-primary group-hover:text-white transition-colors">
+                            <div
+                                class="group bg-white/5 hover:bg-white/10 p-6 rounded-2xl border border-white/10 transition-colors duration-300 flex items-center gap-5">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-primary/20 text-primary flex items-center justify-center text-xl group-hover:bg-primary group-hover:text-white transition-colors">
                                     <i class="fa-solid fa-user-tie"></i>
                                 </div>
                                 <div>
@@ -390,19 +465,25 @@
                                     <span class="font-bold text-white text-xl">師秀玲 主任</span>
                                 </div>
                             </div>
-                            
-                            <div class="group bg-white/5 hover:bg-white/10 p-6 rounded-2xl border border-white/10 transition-colors duration-300 flex items-center gap-5">
-                                <div class="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+
+                            <div
+                                class="group bg-white/5 hover:bg-white/10 p-6 rounded-2xl border border-white/10 transition-colors duration-300 flex items-center gap-5">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl group-hover:bg-emerald-500 group-hover:text-white transition-colors">
                                     <i class="fa-solid fa-book-reader"></i>
                                 </div>
                                 <div>
-                                    <span class="text-emerald-400 text-sm font-bold tracking-wider block mb-1">讀者服務組</span>
-                                    <span class="font-bold text-white text-xl">廖珮君<span class="text-slate-400 text-sm font-normal mx-2">/</span>陳信凱</span>
+                                    <span
+                                        class="text-emerald-400 text-sm font-bold tracking-wider block mb-1">讀者服務組</span>
+                                    <span class="font-bold text-white text-xl">廖珮君<span
+                                            class="text-slate-400 text-sm font-normal mx-2">/</span>陳信凱</span>
                                 </div>
                             </div>
 
-                            <div class="group bg-white/5 hover:bg-white/10 p-6 rounded-2xl border border-white/10 transition-colors duration-300 flex items-center gap-5">
-                                <div class="w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl group-hover:bg-purple-500 group-hover:text-white transition-colors">
+                            <div
+                                class="group bg-white/5 hover:bg-white/10 p-6 rounded-2xl border border-white/10 transition-colors duration-300 flex items-center gap-5">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl group-hover:bg-purple-500 group-hover:text-white transition-colors">
                                     <i class="fa-solid fa-network-wired"></i>
                                 </div>
                                 <div>
@@ -412,11 +493,13 @@
                             </div>
 
                             <div class="grid grid-cols-2 gap-5 mt-2">
-                                <div class="bg-white/5 p-5 rounded-2xl border border-white/10 hover:border-white/20 transition-colors">
+                                <div
+                                    class="bg-white/5 p-5 rounded-2xl border border-white/10 hover:border-white/20 transition-colors">
                                     <span class="text-slate-400 text-xs block mb-2 font-bold tracking-wider">網管人員</span>
                                     <span class="font-bold text-white text-lg block">蕭淑惠 老師</span>
                                 </div>
-                                <div class="bg-white/5 p-5 rounded-2xl border border-white/10 hover:border-white/20 transition-colors">
+                                <div
+                                    class="bg-white/5 p-5 rounded-2xl border border-white/10 hover:border-white/20 transition-colors">
                                     <span class="text-slate-400 text-xs block mb-2 font-bold tracking-wider">業務助理</span>
                                     <span class="font-bold text-white text-lg block">黃宴華 小姐</span>
                                 </div>
@@ -432,11 +515,12 @@
     <section id="downloads" class="py-32 bg-white">
         <div class="max-w-screen-2xl mx-auto px-6 lg:px-12">
             <div class="grid lg:grid-cols-2 gap-20">
-                
+
                 <!-- Downloads -->
                 <div>
                     <div class="flex items-center gap-6 mb-16">
-                        <div class="w-16 h-16 rounded-2xl bg-sky-100 text-primary flex items-center justify-center text-3xl">
+                        <div
+                            class="w-16 h-16 rounded-2xl bg-sky-100 text-primary flex items-center justify-center text-3xl">
                             <i class="fa-solid fa-file-arrow-down"></i>
                         </div>
                         <div>
@@ -444,12 +528,12 @@
                             <p class="text-slate-500 font-display font-medium tracking-wide uppercase">Downloads</p>
                         </div>
                     </div>
-                    
+
                     <div id="downloads-loading" class="flex items-center gap-4 py-12 text-slate-400">
                         <i class="fa-solid fa-circle-notch fa-spin text-3xl"></i>
                         <span class="text-lg">載入檔案中...</span>
                     </div>
-                    
+
                     <div id="downloads-container" class="space-y-5 hidden">
                         <!-- Injected by JS -->
                     </div>
@@ -457,8 +541,9 @@
 
                 <!-- Links -->
                 <div>
-                     <div class="flex items-center gap-6 mb-16">
-                        <div class="w-16 h-16 rounded-2xl bg-orange-100 text-accent flex items-center justify-center text-3xl">
+                    <div class="flex items-center gap-6 mb-16">
+                        <div
+                            class="w-16 h-16 rounded-2xl bg-orange-100 text-accent flex items-center justify-center text-3xl">
                             <i class="fa-solid fa-link"></i>
                         </div>
                         <div>
@@ -466,12 +551,12 @@
                             <p class="text-slate-500 font-display font-medium tracking-wide uppercase">Useful Links</p>
                         </div>
                     </div>
-                    
+
                     <div id="links-loading" class="flex items-center gap-4 py-12 text-slate-400">
                         <i class="fa-solid fa-circle-notch fa-spin text-3xl"></i>
                         <span class="text-lg">載入連結中...</span>
                     </div>
-                    
+
                     <div id="links-container" class="grid grid-cols-1 sm:grid-cols-2 gap-6 hidden">
                         <!-- Injected by JS -->
                     </div>
@@ -481,29 +566,7 @@
         </div>
     </section>
 
-    <!-- Gallery Section -->
-    <section id="gallery" class="py-32 bg-slate-900 relative">
-        <!-- Decor pattern -->
-        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 32px 32px;"></div>
-        
-        <div class="max-w-screen-2xl mx-auto px-6 lg:px-12 relative z-10">
-            <div class="text-center mb-20 max-w-3xl mx-auto">
-                <p class="text-primary font-display font-bold tracking-[0.3em] uppercase mb-4">Memories & Events</p>
-                <h2 class="text-5xl md:text-6xl font-black text-white mb-8 tracking-tight">活動花絮</h2>
-                <p class="text-slate-400 text-xl leading-relaxed">圖書館環境與歷年精彩活動照片集錦。點擊縮圖可開啟網簿檢視更多內容。</p>
-            </div>
-            
-            <div id="gallery-loading" class="flex flex-col items-center justify-center py-20 text-slate-400 gap-4">
-                <i class="fa-solid fa-circle-notch fa-spin text-4xl text-white"></i>
-                <span class="text-lg">載入相簿中...</span>
-            </div>
-            
-            <!-- CSS Column layout for masonry -->
-            <div id="gallery-container" class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-8 space-y-8 hidden">
-                <!-- Injected by JS -->
-            </div>
-        </div>
-    </section>
+
 
     <!-- Footer -->
     <footer class="bg-white pt-24 pb-12 border-t border-slate-200">
@@ -512,37 +575,60 @@
                 <!-- Logo & Address -->
                 <div class="lg:col-span-8">
                     <div class="flex items-center gap-5 mb-10">
-                        <div class="w-14 h-14 bg-slate-900 text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg">
+                        <div
+                            class="w-14 h-14 bg-slate-900 text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg">
                             <i class="fa-solid fa-book-open"></i>
                         </div>
                         <div>
                             <h2 class="text-3xl font-black text-slate-900">路竹高中圖書館</h2>
-                            <p class="text-sm font-display font-bold text-slate-400 tracking-widest uppercase mt-1">LCHS Library</p>
+                            <p class="text-sm font-display font-bold text-slate-400 tracking-widest uppercase mt-1">LCHS
+                                Library</p>
                         </div>
                     </div>
                     <ul class="text-slate-600 space-y-4 text-lg">
-                        <li class="flex items-center gap-4"><i class="fa-solid fa-location-dot w-6 text-slate-300 text-center text-xl"></i> (82150) 高雄市路竹區中華路292號</li>
-                        <li class="flex items-center gap-4"><i class="fa-solid fa-phone w-6 text-slate-300 text-center text-xl"></i> 總機：(07) 696-3008</li>
-                        <li class="flex items-center gap-4"><i class="fa-solid fa-fax w-6 text-slate-300 text-center text-xl"></i> 傳真：(07) 697-0714</li>
-                        <li class="flex items-center gap-4"><i class="fa-solid fa-envelope w-6 text-slate-300 text-center text-xl"></i> <a href="mailto:ling026@yahoo.com.tw" class="font-medium text-primary hover:text-primaryDark hover:underline underline-offset-4 transition-all">ling026@yahoo.com.tw</a></li>
+                        <li class="flex items-center gap-4"><i
+                                class="fa-solid fa-location-dot w-6 text-slate-300 text-center text-xl"></i> (82150)
+                            高雄市路竹區中華路292號</li>
+                        <li class="flex items-center gap-4"><i
+                                class="fa-solid fa-phone w-6 text-slate-300 text-center text-xl"></i> 總機：(07) 696-3008
+                        </li>
+                        <li class="flex items-center gap-4"><i
+                                class="fa-solid fa-fax w-6 text-slate-300 text-center text-xl"></i> 傳真：(07) 697-0714
+                        </li>
+                        <li class="flex items-center gap-4"><i
+                                class="fa-solid fa-envelope w-6 text-slate-300 text-center text-xl"></i> <a
+                                href="mailto:ling026@yahoo.com.tw"
+                                class="font-medium text-primary hover:text-primaryDark hover:underline underline-offset-4 transition-all">ling026@yahoo.com.tw</a>
+                        </li>
                     </ul>
                 </div>
 
                 <!-- Quick Links -->
                 <div class="lg:col-span-4">
-                    <h3 class="text-xl font-black text-slate-900 mb-8 font-display uppercase tracking-widest">Quick Navigation</h3>
+                    <h3 class="text-xl font-black text-slate-900 mb-8 font-display uppercase tracking-widest">Quick
+                        Navigation</h3>
                     <div class="flex flex-col space-y-4 text-lg font-medium">
-                        <a href="#news" class="text-slate-500 hover:text-primary transition-colors flex items-center gap-2 group"><i class="fa-solid fa-chevron-right text-xs opacity-0 group-hover:opacity-100 transition-opacity text-primary"></i> 最新消息</a>
-                        <a href="#about" class="text-slate-500 hover:text-primary transition-colors flex items-center gap-2 group"><i class="fa-solid fa-chevron-right text-xs opacity-0 group-hover:opacity-100 transition-opacity text-primary"></i> 本館簡介</a>
-                        <a href="#downloads" class="text-slate-500 hover:text-primary transition-colors flex items-center gap-2 group"><i class="fa-solid fa-chevron-right text-xs opacity-0 group-hover:opacity-100 transition-opacity text-primary"></i> 資源下載</a>
-                        <a href="#gallery" class="text-slate-500 hover:text-primary transition-colors flex items-center gap-2 group"><i class="fa-solid fa-chevron-right text-xs opacity-0 group-hover:opacity-100 transition-opacity text-primary"></i> 活動花絮</a>
+                        <a href="#news"
+                            class="text-slate-500 hover:text-primary transition-colors flex items-center gap-2 group"><i
+                                class="fa-solid fa-chevron-right text-xs opacity-0 group-hover:opacity-100 transition-opacity text-primary"></i>
+                            最新消息</a>
+                        <a href="#about"
+                            class="text-slate-500 hover:text-primary transition-colors flex items-center gap-2 group"><i
+                                class="fa-solid fa-chevron-right text-xs opacity-0 group-hover:opacity-100 transition-opacity text-primary"></i>
+                            本館簡介</a>
+                        <a href="#downloads"
+                            class="text-slate-500 hover:text-primary transition-colors flex items-center gap-2 group"><i
+                                class="fa-solid fa-chevron-right text-xs opacity-0 group-hover:opacity-100 transition-opacity text-primary"></i>
+                            資源下載</a>
                     </div>
                 </div>
             </div>
 
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-slate-400 text-sm font-medium">
+            <div
+                class="flex flex-col md:flex-row justify-between items-center gap-6 text-slate-400 text-sm font-medium">
                 <p>&copy; 2026 高雄市立路竹高級中學 Lu Chu Senior High School. All Rights Reserved.</p>
-                <p class="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-full">Redesigned with <i class="fa-solid fa-heart text-red-500"></i> using Modern UI/UX</p>
+                <p class="flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-full">Redesigned with <i
+                        class="fa-solid fa-heart text-red-500"></i> using Modern UI/UX</p>
             </div>
         </div>
     </footer>
@@ -550,25 +636,30 @@
     <!-- News Modal -->
     <div id="news-modal" class="fixed inset-0 z-[100] hidden items-center justify-center">
         <!-- Backdrop -->
-        <div id="news-modal-backdrop" class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity opacity-0 cursor-pointer"></div>
-        
+        <div id="news-modal-backdrop"
+            class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity opacity-0 cursor-pointer"></div>
+
         <!-- Modal Content -->
-        <div id="news-modal-content" class="relative bg-white w-full max-w-4xl max-h-[90vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col transform scale-95 opacity-0 transition-all duration-300 m-4">
+        <div id="news-modal-content"
+            class="relative bg-white w-full max-w-4xl max-h-[90vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col transform scale-95 opacity-0 transition-all duration-300 m-4">
             <!-- Header -->
             <div class="flex items-center justify-between p-6 border-b border-slate-100 bg-slate-50/50">
                 <div class="flex items-center gap-3">
-                    <span id="modal-tag" class="px-3 py-1 rounded-full text-xs font-bold bg-sky-100 text-primary">公告</span>
-                    <span id="modal-date" class="text-sm text-slate-500 font-en"><i class="fa-regular fa-calendar mr-1"></i></span>
+                    <span id="modal-tag"
+                        class="px-3 py-1 rounded-full text-xs font-bold bg-sky-100 text-primary">公告</span>
+                    <span id="modal-date" class="text-sm text-slate-500 font-en"><i
+                            class="fa-regular fa-calendar mr-1"></i></span>
                 </div>
-                <button id="close-modal-btn" class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-colors">
+                <button id="close-modal-btn"
+                    class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-colors">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
-            
+
             <!-- Body -->
             <div class="p-6 md:p-8 overflow-y-auto flex-1 custom-scrollbar">
                 <h2 id="modal-title" class="text-2xl md:text-3xl font-black text-slate-900 mb-6 leading-tight"></h2>
-                
+
                 <div id="modal-loading" class="hidden flex-col items-center justify-center py-12 text-slate-400 gap-4">
                     <i class="fa-solid fa-circle-notch fa-spin text-4xl text-primary"></i>
                     <span class="font-medium text-lg">正在載入校網內容...</span>
@@ -577,7 +668,7 @@
                 <div id="modal-body" class="prose prose-lg prose-slate max-w-none mb-8 text-slate-700 leading-relaxed">
                     <!-- HTML content goes here -->
                 </div>
-                
+
                 <!-- Attachments/Links -->
                 <div id="modal-attachments" class="hidden mt-8 space-y-4 border-t border-slate-100 pt-6">
                     <h4 class="text-lg font-bold text-slate-800 flex items-center gap-2">
@@ -594,4 +685,5 @@
     <!-- Use the existing app.js which handles dynamic content injection -->
     <script src="app.js"></script>
 </body>
+
 </html>
