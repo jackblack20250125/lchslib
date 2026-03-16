@@ -474,6 +474,65 @@ async function renderDownloads() {
     container.innerHTML = html;
 }
 
+// 渲染: 組織分工
+async function renderOrg() {
+    const loading = document.getElementById('org-loading');
+    const container = document.getElementById('org-container');
+    if (!loading || !container) return;
+
+    const rows = await fetchSheetData('組織分工');
+    loading.classList.add('hidden');
+    container.classList.remove('hidden');
+
+    if (!rows || rows.length === 0) {
+        container.innerHTML = '<p class="text-slate-400">無法載入組織資料。</p>';
+        return;
+    }
+
+    // 第一行是標題列(職稱/姓名/工作執掌)，跳過
+    const members = rows.slice(1).filter(r => {
+        const keys = Object.keys(r);
+        return r[keys[0]] || r[keys[1]];
+    });
+
+    function getRoleColor(role) {
+        if (role.includes('主任')) return { ring: 'bg-primary/20 text-primary group-hover:bg-primary', label: 'text-sky-400', icon: 'fa-user-tie' };
+        if (role.includes('組長')) return { ring: 'bg-emerald-500/20 text-emerald-400 group-hover:bg-emerald-500', label: 'text-emerald-400', icon: 'fa-book-reader' };
+        if (role.includes('協辦')) return { ring: 'bg-emerald-500/20 text-emerald-400 group-hover:bg-emerald-500', label: 'text-emerald-400', icon: 'fa-book-open' };
+        if (role.includes('資訊') || role.includes('秘書')) return { ring: 'bg-purple-500/20 text-purple-400 group-hover:bg-purple-500', label: 'text-purple-400', icon: 'fa-network-wired' };
+        return { ring: 'bg-white/10 text-slate-300 group-hover:bg-white/20', label: 'text-slate-400', icon: 'fa-user' };
+    }
+
+    let html = '';
+    members.forEach(r => {
+        const keys = Object.keys(r);
+        const role  = r[keys[0]] || '';
+        const name  = r[keys[1]] || '';
+        const task1 = r[keys[2]] || '';
+        const task2 = r[keys[3]] || '';
+        const colors = getRoleColor(role);
+
+        const taskLinks = [task1, task2].filter(t => t && t.startsWith('http'));
+        const taskBtns = taskLinks.map((url, i) =>
+            `<a href="${url}" target="_blank" class="ml-2 text-xs px-2 py-0.5 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition-colors">工作執掌${taskLinks.length > 1 ? (i + 1) : ''} <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-0.5"></i></a>`
+        ).join('');
+
+        html += `
+        <div class="group bg-white/5 hover:bg-white/10 p-6 rounded-2xl border border-white/10 transition-colors duration-300 flex items-center gap-5">
+            <div class="w-12 h-12 rounded-full ${colors.ring} flex items-center justify-center text-xl group-hover:text-white transition-colors flex-shrink-0">
+                <i class="fa-solid ${colors.icon}"></i>
+            </div>
+            <div class="min-w-0">
+                <span class="${colors.label} text-sm font-bold tracking-wider block mb-1">${role}</span>
+                <span class="font-bold text-white text-xl">${name}</span>
+                ${taskBtns}
+            </div>
+        </div>`;
+    });
+
+    container.innerHTML = html;
+}
+
 // 渲染: 網站連結
 async function renderLinks() {
     const container = document.getElementById('links-container');
@@ -613,6 +672,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupOpacLinks();
     // Fetch and render data
     renderNews();
+    renderOrg();
     renderDownloads();
     renderLinks();
 });

@@ -230,7 +230,8 @@
                     </p>
 
                     <!-- Search Widget -->
-                    <div class="glass-card p-4 rounded-3xl max-w-2xl transform transition-all duration-500" id="opac-search">
+                    <div class="glass-card p-4 rounded-3xl max-w-2xl transform transition-all duration-500"
+                        id="opac-search">
                         <div class="flex flex-col sm:flex-row items-center gap-3">
                             <div class="relative w-full">
                                 <div
@@ -287,8 +288,8 @@
                                 </div>
                             </div>
 
-                            <div
-                                class="absolute -bottom-10 -right-10 w-48 h-48 glass-card rounded-3xl p-6 flex flex-col items-center justify-center gap-4 rotate-[12deg] hover:rotate-0 transition-transform duration-500 z-20">
+                            <div class="absolute -bottom-10 -right-10 w-48 h-48 glass-card rounded-3xl p-6 flex flex-col items-center justify-center gap-4 rotate-[12deg] hover:rotate-0 transition-transform duration-500 z-20 cursor-pointer"
+                                onclick="document.getElementById('downloads').scrollIntoView({behavior:'smooth'})">
                                 <div
                                     class="w-12 h-12 rounded-xl bg-gradient-to-tr from-orange-400 to-pink-500 flex items-center justify-center text-white text-2xl">
                                     <i class="fa-solid fa-laptop-code"></i>
@@ -456,61 +457,16 @@
                         </h3>
 
                         <p class="mb-10 text-slate-300 text-lg leading-relaxed relative z-10">
-                            本館設教師兼主任一人，承校長之命綜理館務，另設置組長一人，協辦行政二人，助理一人，並成立圖書館委員會，以協助館務之興革與發展。
+                            本館設教師兼主任一人，承校長之命綜理館務，另設置組長兩，協辦行政二人，助理一人，並成立圖書館委員會，以協助館務之興革與發展。
                         </p>
 
-                        <div class="space-y-5 relative z-10">
-                            <!-- Team Member Cards -->
-                            <div
-                                class="group bg-white/5 hover:bg-white/10 p-6 rounded-2xl border border-white/10 transition-colors duration-300 flex items-center gap-5">
-                                <div
-                                    class="w-12 h-12 rounded-full bg-primary/20 text-primary flex items-center justify-center text-xl group-hover:bg-primary group-hover:text-white transition-colors">
-                                    <i class="fa-solid fa-user-tie"></i>
-                                </div>
-                                <div>
-                                    <span class="text-sky-400 text-sm font-bold tracking-wider block mb-1">圖書館主任</span>
-                                    <span class="font-bold text-white text-xl">師秀玲 主任</span>
-                                </div>
-                            </div>
-
-                            <div
-                                class="group bg-white/5 hover:bg-white/10 p-6 rounded-2xl border border-white/10 transition-colors duration-300 flex items-center gap-5">
-                                <div
-                                    class="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl group-hover:bg-emerald-500 group-hover:text-white transition-colors">
-                                    <i class="fa-solid fa-book-reader"></i>
-                                </div>
-                                <div>
-                                    <span
-                                        class="text-emerald-400 text-sm font-bold tracking-wider block mb-1">讀者服務組</span>
-                                    <span class="font-bold text-white text-xl">廖珮君<span
-                                            class="text-slate-400 text-sm font-normal mx-2">/</span>陳信凱</span>
-                                </div>
-                            </div>
-
-                            <div
-                                class="group bg-white/5 hover:bg-white/10 p-6 rounded-2xl border border-white/10 transition-colors duration-300 flex items-center gap-5">
-                                <div
-                                    class="w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl group-hover:bg-purple-500 group-hover:text-white transition-colors">
-                                    <i class="fa-solid fa-network-wired"></i>
-                                </div>
-                                <div>
-                                    <span class="text-purple-400 text-sm font-bold tracking-wider block mb-1">資訊組</span>
-                                    <span class="font-bold text-white text-xl">許鐵鐘 組長</span>
-                                </div>
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-5 mt-2">
-                                <div
-                                    class="bg-white/5 p-5 rounded-2xl border border-white/10 hover:border-white/20 transition-colors">
-                                    <span class="text-slate-400 text-xs block mb-2 font-bold tracking-wider">網管人員</span>
-                                    <span class="font-bold text-white text-lg block">蕭淑惠 老師</span>
-                                </div>
-                                <div
-                                    class="bg-white/5 p-5 rounded-2xl border border-white/10 hover:border-white/20 transition-colors">
-                                    <span class="text-slate-400 text-xs block mb-2 font-bold tracking-wider">業務助理</span>
-                                    <span class="font-bold text-white text-lg block">黃宴華 小姐</span>
-                                </div>
-                            </div>
+                        <div id="org-loading" class="space-y-4 relative z-10">
+                            <div class="h-16 bg-white/10 rounded-2xl animate-pulse"></div>
+                            <div class="h-16 bg-white/10 rounded-2xl animate-pulse"></div>
+                            <div class="h-16 bg-white/10 rounded-2xl animate-pulse"></div>
+                        </div>
+                        <div id="org-container" class="space-y-5 relative z-10 hidden">
+                            <!-- Injected by JS -->
                         </div>
                     </div>
                 </div>
