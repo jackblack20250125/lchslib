@@ -500,7 +500,9 @@ async function renderOrg() {
         if (role.includes('組長')) return { ring: 'bg-emerald-500/20 text-emerald-400 group-hover:bg-emerald-500', label: 'text-emerald-400', icon: 'fa-book-reader' };
         if (role.includes('協辦')) return { ring: 'bg-emerald-500/20 text-emerald-400 group-hover:bg-emerald-500', label: 'text-emerald-400', icon: 'fa-book-open' };
         if (role.includes('資訊') || role.includes('秘書')) return { ring: 'bg-purple-500/20 text-purple-400 group-hover:bg-purple-500', label: 'text-purple-400', icon: 'fa-network-wired' };
-        return { ring: 'bg-white/10 text-slate-300 group-hover:bg-white/20', label: 'text-slate-400', icon: 'fa-user' };
+        if (role.includes('助理')) return { ring: 'bg-orange-500/20 text-orange-400 group-hover:bg-orange-500', label: 'text-orange-400', icon: 'fa-user-gear' };
+        if (role.includes('平板')) return { ring: 'bg-indigo-500/20 text-indigo-400 group-hover:bg-indigo-500', label: 'text-indigo-400', icon: 'fa-tablet-screen-button' };
+        return { ring: 'bg-amber-500/20 text-amber-400 group-hover:bg-amber-500', label: 'text-amber-400', icon: 'fa-user' };
     }
 
     let html = '';
