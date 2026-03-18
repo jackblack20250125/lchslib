@@ -535,7 +535,7 @@ async function renderOrg() {
     container.innerHTML = html;
 }
 
-// 渲染: 網站連結
+// 渲染: 網站連結 (現在顯示為網路資源)
 async function renderLinks() {
     const container = document.getElementById('links-container');
     const loading = document.getElementById('links-loading');
@@ -545,9 +545,26 @@ async function renderLinks() {
     container.classList.remove('hidden');
 
     if (!rows || rows.length === 0) {
-        container.innerHTML = `<div class="col-span-1 sm:col-span-2 text-center text-gray-500 py-8 border-2 border-dashed border-gray-200 rounded-3xl">無網站連結。請確認試算表名稱為「網站連結」。</div>`;
+        container.innerHTML = `<div class="col-span-1 sm:col-span-2 text-center text-gray-500 py-8 border-2 border-dashed border-gray-200 rounded-3xl">無網路資源。請確認試算表名稱為「網站連結」。</div>`;
         return;
     }
+
+    // 先依分類排序，再依排序權重排序
+    rows.sort((a, b) => {
+        const catA = getCellValue(a, ['分類'], 0) || '';
+        const catB = getCellValue(b, ['分類'], 0) || '';
+        
+        if (catA !== catB) {
+            return catA.localeCompare(catB, 'zh-TW');
+        }
+        
+        // 解析排序權重，若無值則預設為 0
+        const weightA = parseFloat(getCellValue(a, ['排序權重', '權重', '排序'], 999)) || 0;
+        const weightB = parseFloat(getCellValue(b, ['排序權重', '權重', '排序'], 999)) || 0;
+        
+        // 以權重大到小排序 (descending)
+        return weightB - weightA;
+    });
 
     let html = '';
     rows.forEach(row => {
