@@ -143,8 +143,10 @@
                         class="text-slate-600 font-medium hover:text-primary transition-colors hover:scale-105 transform duration-200">最新消息</a>
                     <a href="#about"
                         class="text-slate-600 font-medium hover:text-primary transition-colors hover:scale-105 transform duration-200">本館簡介</a>
-                    <a href="#downloads"
+                    <a href="#network"
                         class="text-slate-600 font-medium hover:text-primary transition-colors hover:scale-105 transform duration-200">網路資源</a>
+                    <a href="#downloads"
+                        class="text-slate-600 font-medium hover:text-primary transition-colors hover:scale-105 transform duration-200">檔案下載</a>
                     <a href="#gallery"
                         class="text-slate-600 font-medium hover:text-primary transition-colors hover:scale-105 transform duration-200">環境剪影</a>
 
@@ -172,7 +174,8 @@
             <div class="px-6 py-8 space-y-4">
                 <a href="#news" class="block text-xl font-bold text-slate-800 hover:text-primary">最新消息</a>
                 <a href="#about" class="block text-xl font-bold text-slate-800 hover:text-primary">本館簡介</a>
-                <a href="#downloads" class="block text-xl font-bold text-slate-800 hover:text-primary">網路資源</a>
+                <a href="#network" class="block text-xl font-bold text-slate-800 hover:text-primary">網路資源</a>
+                <a href="#downloads" class="block text-xl font-bold text-slate-800 hover:text-primary">檔案下載</a>
                 <a href="#gallery" class="block text-xl font-bold text-slate-800 hover:text-primary">環境剪影</a>
                 <hr class="border-slate-100 my-4">
                 <a href="http://192.168.11.242/webopac" target="_blank" id="mobile-opac-link"
@@ -479,57 +482,50 @@
         </div>
     </section>
 
-    <!-- Links & Downloads Section -->
-    <section id="downloads" class="py-32 bg-white">
+    <!-- Network Resources Section -->
+    <section id="network" class="py-32 bg-white">
         <div class="max-w-screen-2xl mx-auto px-6 lg:px-12">
-            <div class="grid lg:grid-cols-2 gap-20">
-
-                <!-- Links (renamed to Network Resources) -->
-                <div>
-                    <div class="flex items-center gap-6 mb-16">
-                        <div
-                            class="w-16 h-16 rounded-2xl bg-orange-100 text-accent flex items-center justify-center text-3xl">
-                            <i class="fa-solid fa-globe"></i>
-                        </div>
-                        <div>
-                            <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-2">網路資源</h2>
-                            <p class="text-slate-500 font-display font-medium tracking-wide uppercase">Network Resources</p>
-                        </div>
-                    </div>
-
-                    <div id="links-loading" class="flex items-center gap-4 py-12 text-slate-400">
-                        <i class="fa-solid fa-circle-notch fa-spin text-3xl"></i>
-                        <span class="text-lg">載入資源中...</span>
-                    </div>
-
-                    <div id="links-container" class="grid grid-cols-1 sm:grid-cols-2 gap-6 hidden">
-                        <!-- Injected by JS -->
-                    </div>
+            <div class="flex items-center gap-6 mb-16">
+                <div class="w-16 h-16 rounded-2xl bg-orange-100 text-accent flex items-center justify-center text-3xl">
+                    <i class="fa-solid fa-globe"></i>
                 </div>
-
-                <!-- Downloads -->
                 <div>
-                    <div class="flex items-center gap-6 mb-16">
-                        <div
-                            class="w-16 h-16 rounded-2xl bg-sky-100 text-primary flex items-center justify-center text-3xl">
-                            <i class="fa-solid fa-file-arrow-down"></i>
-                        </div>
-                        <div>
-                            <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-2">檔案下載</h2>
-                            <p class="text-slate-500 font-display font-medium tracking-wide uppercase">Downloads</p>
-                        </div>
-                    </div>
-
-                    <div id="downloads-loading" class="flex items-center gap-4 py-12 text-slate-400">
-                        <i class="fa-solid fa-circle-notch fa-spin text-3xl"></i>
-                        <span class="text-lg">載入檔案中...</span>
-                    </div>
-
-                    <div id="downloads-container" class="space-y-5 hidden">
-                        <!-- Injected by JS -->
-                    </div>
+                    <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-2">網路資源</h2>
+                    <p class="text-slate-500 font-display font-medium tracking-wide uppercase">Network Resources</p>
                 </div>
+            </div>
 
+            <div id="links-loading" class="flex items-center gap-4 py-12 text-slate-400">
+                <i class="fa-solid fa-circle-notch fa-spin text-3xl"></i>
+                <span class="text-lg">載入資源中...</span>
+            </div>
+
+            <div id="links-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden">
+                <!-- Injected by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Downloads Section -->
+    <section id="downloads" class="py-32 bg-slate-50 relative border-t border-slate-200">
+        <div class="max-w-screen-2xl mx-auto px-6 lg:px-12">
+            <div class="flex items-center gap-6 mb-16">
+                <div class="w-16 h-16 rounded-2xl bg-sky-100 text-primary flex items-center justify-center text-3xl">
+                    <i class="fa-solid fa-file-arrow-down"></i>
+                </div>
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-2">檔案下載</h2>
+                    <p class="text-slate-500 font-display font-medium tracking-wide uppercase">Downloads</p>
+                </div>
+            </div>
+
+            <div id="downloads-loading" class="flex items-center gap-4 py-12 text-slate-400">
+                <i class="fa-solid fa-circle-notch fa-spin text-3xl"></i>
+                <span class="text-lg">載入檔案中...</span>
+            </div>
+
+            <div id="downloads-container" class="grid lg:grid-cols-2 gap-10 hidden">
+                <!-- Injected by JS -->
             </div>
         </div>
     </section>
@@ -537,7 +533,7 @@
 
 
     <!-- Gallery Section -->
-    <section id="gallery" class="py-32 bg-slate-50 relative border-t border-slate-200">
+    <section id="gallery" class="py-32 bg-white relative border-t border-slate-200">
         <div class="max-w-screen-2xl mx-auto px-6 lg:px-12 relative z-10">
             <div class="mb-20">
                 <h2 class="text-5xl md:text-6xl font-black text-slate-900 mb-4 tracking-tight">環境剪影</h2>
@@ -625,10 +621,14 @@
                             class="text-slate-500 hover:text-primary transition-colors flex items-center gap-2 group"><i
                                 class="fa-solid fa-chevron-right text-xs opacity-0 group-hover:opacity-100 transition-opacity text-primary"></i>
                             本館簡介</a>
-                        <a href="#downloads"
+                        <a href="#network"
                             class="text-slate-500 hover:text-primary transition-colors flex items-center gap-2 group"><i
                                 class="fa-solid fa-chevron-right text-xs opacity-0 group-hover:opacity-100 transition-opacity text-primary"></i>
                             網路資源</a>
+                        <a href="#downloads"
+                            class="text-slate-500 hover:text-primary transition-colors flex items-center gap-2 group"><i
+                                class="fa-solid fa-chevron-right text-xs opacity-0 group-hover:opacity-100 transition-opacity text-primary"></i>
+                            檔案下載</a>
                         <a href="#gallery"
                             class="text-slate-500 hover:text-primary transition-colors flex items-center gap-2 group"><i
                                 class="fa-solid fa-chevron-right text-xs opacity-0 group-hover:opacity-100 transition-opacity text-primary"></i>

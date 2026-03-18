@@ -567,22 +567,46 @@ async function renderLinks() {
     });
 
     let html = '';
+    
+    // 定義一組好看的 Tailwind 背景色與文字色供分類隨機分配
+    const colorPairs = [
+        { bg: 'bg-emerald-100', text: 'text-emerald-700' },
+        { bg: 'bg-purple-100', text: 'text-purple-700' },
+        { bg: 'bg-rose-100', text: 'text-rose-700' },
+        { bg: 'bg-amber-100', text: 'text-amber-700' },
+        { bg: 'bg-indigo-100', text: 'text-indigo-700' },
+        { bg: 'bg-teal-100', text: 'text-teal-700' },
+        { bg: 'bg-fuchsia-100', text: 'text-fuchsia-700' }
+    ];
+    let catColors = {};
+    let nextColorIdx = 0;
+
     rows.forEach(row => {
         const cat = getCellValue(row, ['分類'], 0);
         const name = getCellValue(row, ['名稱', '網站名稱'], 1) || '未知連結';
         const link = getCellValue(row, ['連結', '網址', '網址連結'], 2) || '#';
         const desc = getCellValue(row, ['備註', '描述', '備註描述'], 3);
 
+        // 動態分配顏色給不同分類
+        let currentColors = { bg: '', text: 'text-accent' }; // Default fallback
+        if (cat) {
+            if (!catColors[cat]) {
+                catColors[cat] = colorPairs[nextColorIdx % colorPairs.length];
+                nextColorIdx++;
+            }
+            currentColors = catColors[cat];
+        }
+
         html += `
-        <a href="${link}" target="_blank" class="block p-5 rounded-2xl border border-gray-200 link-card bg-white relative overflow-hidden group">
-            <div class="absolute right-0 top-0 w-16 h-16 bg-gradient-to-br from-transparent to-orange-100 rounded-bl-full opacity-50 transition-all group-hover:scale-150"></div>
+        <a href="${link}" target="_blank" class="block p-5 rounded-2xl border border-gray-200 link-card bg-white relative overflow-hidden group hover:-translate-y-1 transition-transform shadow-sm hover:shadow-lg">
+            <div class="absolute right-0 top-0 w-16 h-16 bg-gradient-to-br from-transparent to-gray-100 rounded-bl-full opacity-50 transition-all group-hover:scale-150"></div>
             <div class="flex items-start justify-between relative z-10">
                 <div>
-                    ${cat ? `<span class="text-sm font-bold text-accent mb-1 block">${cat}</span>` : ''}
+                    ${cat ? `<span class="inline-block px-3 py-1 rounded-full text-xs font-bold ${currentColors.bg} ${currentColors.text} mb-2 shadow-sm">${cat}</span>` : ''}
                     <h4 class="font-bold text-gray-800 text-lg mb-1 group-hover:text-primary transition-colors">${name}</h4>
                     ${desc ? `<p class="text-sm text-gray-500 line-clamp-1">${desc}</p>` : ''}
                 </div>
-                <div class="text-gray-300 group-hover:text-accent transition-colors">
+                <div class="text-gray-300 group-hover:text-primary transition-colors mt-1">
                     <i class="fa-solid fa-arrow-up-right-from-square"></i>
                 </div>
             </div>
