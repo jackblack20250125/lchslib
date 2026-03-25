@@ -268,6 +268,67 @@ window.openNewsModal = function(id) {
     let hasAttachments = false;
     let attachmentsHtml = '';
 
+    const generatePreviewHtml = (url, titleText, isOptional = false) => {
+        let isImg = url.match(/\.(jpeg|jpg|gif|png|webp)$/i);
+        let isPdf = url.match(/\.pdf$/i);
+        let isDrive = false;
+        let driveId = '';
+        
+        if (url.includes('drive.google.com')) {
+            const idMatchFile = url.match(/file\/d\/([a-zA-Z0-9_-]+)/);
+            const idMatchOpen = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+            if (idMatchFile && idMatchFile[1]) {
+                driveId = idMatchFile[1];
+                isDrive = true;
+            } else if (idMatchOpen && idMatchOpen[1]) {
+                driveId = idMatchOpen[1];
+                isDrive = true;
+            }
+        }
+
+        if (isImg || (isDrive && item.media && item.media.includes('照片') && !isOptional)) {
+            let displayUrl = url;
+            if (isDrive) displayUrl = `https://drive.google.com/uc?export=view&id=${driveId}`;
+            return `
+            <div class="mt-4 rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+                <img src="${displayUrl}" alt="${titleText}" class="w-full h-auto max-h-[400px] object-contain bg-gray-50/50" onerror="this.outerHTML='<a href=\\'${url}\\' target=\\'_blank\\' class=\\'flex items-center justify-between p-4 bg-gray-50 hover:bg-sky-50 rounded-xl border border-gray-100 transition-colors group\\'><div class=\\'flex items-center gap-3\\'><div class=\\'w-10 h-10 bg-white rounded-lg shadow-sm flex items-center justify-center text-primary\\'><i class=\\'fa-solid fa-file-arrow-down\\'></i></div><span class=\\'font-bold text-gray-700 group-hover:text-primary\\'>照片無法預覽，點此開啟或下載</span></div><i class=\\'fa-solid fa-arrow-up-right-from-square text-gray-400 group-hover:text-primary\\'></i></a>'">
+                <div class="bg-gray-50/80 p-3 border-t border-gray-200 flex justify-between items-center px-4">
+                    <span class="text-sm text-gray-500 font-medium">${titleText}</span>
+                    <a href="${url}" target="_blank" class="text-primary hover:text-primaryDark font-bold text-sm bg-white px-3 py-1.5 rounded-lg border border-gray-200 shadow-sm transition-colors hover:bg-sky-50 block"><i class="fa-solid fa-arrow-up-right-from-square md:mr-1"></i><span class="hidden md:inline"> 原始連結</span></a>
+                </div>
+            </div>`;
+        } else if (isPdf || isDrive) {
+            let iframeSrc = url;
+            if (isDrive) iframeSrc = `https://drive.google.com/file/d/${driveId}/preview`;
+            return `
+            <div class="mt-4 rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+                <iframe src="${iframeSrc}" class="w-full h-[600px] border-0 bg-gray-50/50"></iframe>
+                <div class="bg-gray-50/80 p-3 border-t border-gray-200 flex justify-between items-center px-4">
+                    <span class="text-sm text-gray-500 font-medium">${titleText}</span>
+                    <a href="${url}" target="_blank" class="text-primary hover:text-primaryDark font-bold text-sm bg-white px-3 py-1.5 rounded-lg border border-gray-200 shadow-sm transition-colors hover:bg-sky-50 block"><i class="fa-solid fa-arrow-up-right-from-square md:mr-1"></i><span class="hidden md:inline"> 新分頁開啟</span></a>
+                </div>
+            </div>`;
+        } else {
+            const iconColor = isOptional ? 'text-accent' : 'text-primary';
+            const bgColor = isOptional ? 'bg-orange-50' : 'bg-gray-50';
+            const hoverBg = isOptional ? 'hover:bg-orange-100' : 'hover:bg-sky-50';
+            const borderColor = isOptional ? 'border-orange-100' : 'border-gray-100';
+            const hoverTextColor = isOptional ? 'group-hover:text-accent' : 'group-hover:text-primary';
+            const icon = isOptional ? 'fa-link' : 'fa-file-arrow-down';
+
+            return `
+            <a href="${url}" target="_blank" class="flex items-center justify-between p-4 ${bgColor} ${hoverBg} rounded-xl border ${borderColor} transition-colors group mt-2 shadow-sm">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-white rounded-lg shadow-sm flex items-center justify-center ${iconColor}">
+                        <i class="fa-solid ${icon}"></i>
+                    </div>
+                    <span class="font-bold text-gray-700 ${hoverTextColor}">${titleText}</span>
+                </div>
+                <i class="fa-solid fa-arrow-up-right-from-square text-gray-400 ${hoverTextColor}"></i>
+            </a>`;
+        }
+    };
+
     // 照片或檔案
     if (item.media) {
         hasAttachments = true;
@@ -275,43 +336,7 @@ window.openNewsModal = function(id) {
         
         if (mediaUrls.length > 0) {
             mediaUrls.forEach((url, index) => {
-                let displayUrl = url;
-                let isImage = false;
-                
-                if (url.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
-                    isImage = true;
-                }
-                
-                // Google Drive 連結轉換
-                if (url.includes('drive.google.com/file/d/')) {
-                    const idMatch = url.match(/file\/d\/([a-zA-Z0-9_-]+)/);
-                    if (idMatch && idMatch[1]) {
-                        displayUrl = `https://drive.google.com/uc?export=view&id=${idMatch[1]}`;
-                    }
-                }
-                
-                // 如果來源暗示為照片
-                if (isImage || (url.includes('drive.google.com') && item.media.includes('照片'))) {
-                    attachmentsHtml += `
-                    <div class="mt-4 rounded-xl overflow-hidden border border-gray-200">
-                        <img src="${displayUrl}" alt="活動照片" class="w-full h-auto max-h-[400px] object-contain bg-gray-50" onerror="this.outerHTML='<a href=\\'${url}\\' target=\\'_blank\\' class=\\'flex items-center justify-between p-4 bg-gray-50 hover:bg-sky-50 rounded-xl border border-gray-100 transition-colors group\\'><div class=\\'flex items-center gap-3\\'><div class=\\'w-10 h-10 bg-white rounded-lg shadow-sm flex items-center justify-center text-primary\\'><i class=\\'fa-solid fa-file-arrow-down\\'></i></div><span class=\\'font-bold text-gray-700 group-hover:text-primary\\'>照片無法預覽，點此開啟或下載</span></div><i class=\\'fa-solid fa-arrow-up-right-from-square text-gray-400 group-hover:text-primary\\'></i></a>'">
-                        <div class="bg-gray-50 p-3 border-t border-gray-200 flex justify-between items-center px-4">
-                            <span class="text-sm text-gray-500 font-medium">照片/圖片 ${index + 1}</span>
-                            <a href="${url}" target="_blank" class="text-primary hover:text-primaryDark font-bold text-sm bg-sky-100 px-3 py-1.5 rounded-lg transition-colors"><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> 原始連結</a>
-                        </div>
-                    </div>`;
-                } else {
-                    attachmentsHtml += `
-                    <a href="${url}" target="_blank" class="flex items-center justify-between p-4 bg-gray-50 hover:bg-sky-50 rounded-xl border border-gray-100 transition-colors group">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-white rounded-lg shadow-sm flex items-center justify-center text-primary">
-                                <i class="fa-solid fa-file-arrow-down"></i>
-                            </div>
-                            <span class="font-bold text-gray-700 group-hover:text-primary">附件檔案 ${index + 1}</span>
-                        </div>
-                        <i class="fa-solid fa-arrow-up-right-from-square text-gray-400 group-hover:text-primary"></i>
-                    </a>`;
-                }
+                attachmentsHtml += generatePreviewHtml(url, `附件檔案 ${index + 1}`, false);
             });
         }
     }
@@ -319,16 +344,11 @@ window.openNewsModal = function(id) {
     // 額外連結
     if (item.optionalLink && item.optionalLink.startsWith('http')) {
         hasAttachments = true;
-        attachmentsHtml += `
-        <a href="${item.optionalLink}" target="_blank" class="flex items-center justify-between p-4 bg-orange-50 hover:bg-orange-100 rounded-xl border border-orange-100 transition-colors group mt-2">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-white rounded-lg shadow-sm flex items-center justify-center text-accent">
-                    <i class="fa-solid fa-link"></i>
-                </div>
-                <span class="font-bold text-gray-700 group-hover:text-accent">相關連結</span>
-            </div>
-            <i class="fa-solid fa-arrow-up-right-from-square text-orange-300 group-hover:text-accent"></i>
-        </a>`;
+        const optUrls = item.optionalLink.split(/[,\s]+/).filter(u => u.startsWith('http'));
+        optUrls.forEach((url, index) => {
+            const title = optUrls.length > 1 ? `相關連結 ${index + 1}` : `相關連結`;
+            attachmentsHtml += generatePreviewHtml(url, title, true);
+        });
     }
 
     if (hasAttachments) {
